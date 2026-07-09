@@ -1,12 +1,11 @@
 package ru.mcn.knowledgebase.presentation.article
 
-import ru.mcn.knowledgebase.data.remote.GithubKnowledgeRepository
 import ru.mcn.knowledgebase.domain.repository.KnowledgeRepository
-
+import ru.mcn.knowledgebase.core.di.AppModule
 class ArticleViewModel {
 
     private val repository: KnowledgeRepository =
-        GithubKnowledgeRepository()
+        AppModule.knowledgeRepository
 
     suspend fun loadArticle(
         articleId: String

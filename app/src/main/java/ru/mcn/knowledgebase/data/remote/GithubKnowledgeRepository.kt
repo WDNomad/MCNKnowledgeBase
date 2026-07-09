@@ -1,18 +1,18 @@
 package ru.mcn.knowledgebase.data.remote
 
-import ru.mcn.knowledgebase.core.network.RetrofitProvider
 import ru.mcn.knowledgebase.domain.model.Article
 import ru.mcn.knowledgebase.domain.model.Category
 import ru.mcn.knowledgebase.domain.repository.KnowledgeRepository
 
-class GithubKnowledgeRepository : KnowledgeRepository {
+class GithubKnowledgeRepository(
+    private val remoteDataSource: KnowledgeRemoteDataSource
+) : KnowledgeRepository {
 
     override suspend fun getCategories(): List<Category> {
 
-        return RetrofitProvider.api
+        return remoteDataSource
             .getCategories()
             .map {
-
                 Category(
                     id = it.id,
                     title = it.title
@@ -20,17 +20,12 @@ class GithubKnowledgeRepository : KnowledgeRepository {
             }
     }
 
-    override suspend fun getArticles(
-        categoryId: String
-    ): List<Article> {
+    override suspend fun getArticles(categoryId: String): List<Article> {
 
-        return RetrofitProvider.api
+        return remoteDataSource
             .getArticles()
-            .filter {
-                it.categoryId == categoryId
-            }
+            .filter { it.categoryId == categoryId }
             .map {
-
                 Article(
                     id = it.id,
                     categoryId = it.categoryId,
@@ -39,16 +34,15 @@ class GithubKnowledgeRepository : KnowledgeRepository {
                     originalUrl = it.originalUrl,
                     updatedAt = it.updatedAt,
                     images = it.images
-
                 )
             }
     }
+
     override suspend fun getAllArticles(): List<Article> {
 
-        return RetrofitProvider.api
+        return remoteDataSource
             .getArticles()
             .map {
-
                 Article(
                     id = it.id,
                     categoryId = it.categoryId,
@@ -61,17 +55,11 @@ class GithubKnowledgeRepository : KnowledgeRepository {
             }
     }
 
-    override suspend fun getArticle(
-        articleId: String
-    ): Article? {
+    override suspend fun getArticle(articleId: String): Article? {
 
-        return RetrofitProvider.api
-            .getArticles()
-            .firstOrNull {
-                it.id == articleId
-            }
+        return remoteDataSource
+            .getArticle(articleId)
             ?.let {
-
                 Article(
                     id = it.id,
                     categoryId = it.categoryId,
