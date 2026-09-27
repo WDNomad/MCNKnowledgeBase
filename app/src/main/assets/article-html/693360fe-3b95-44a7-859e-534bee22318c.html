@@ -1,0 +1,500 @@
+<h1 id="адресная-книга"><a aria-hidden="true" tabindex="-1" href="#адресная-книга"><span class="icon icon-link"></span></a>Адресная книга</h1>
+<p>События (вебхуки и триггеры), связанные с созданием, изменением и удалением контактов в адресной книге.</p>
+<p>Единый <code>Envelope</code> используется для всех событий: один <code>channel</code> соответствует одному <code>event_type</code>.</p>
+<h2 id="содержание"><a aria-hidden="true" tabindex="-1" href="#содержание"><span class="icon icon-link"></span></a>Содержание</h2>
+<ul>
+<li><a href="#%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BA%D0%BE%D0%BD%D1%82%D0%B0%D0%BA%D1%82%D0%B0">Создание контакта</a></li>
+<li><a href="#%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BA%D0%BE%D0%BD%D1%82%D0%B0%D0%BA%D1%82%D0%B0">Изменение контакта</a></li>
+<li><a href="#%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0-%D1%81-%D0%BA%D0%BE%D1%80%D0%B7%D0%B8%D0%BD%D0%BE%D0%B9">Работа с корзиной</a></li>
+</ul>
+<p>Также см.:<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-virtualnaya-ats-zvonki-vats-pereadresatsiya-i-vnutrennie-nomera--c8d6608a-4125-4ace-9669-8d8351c72a65/"><strong>«Каталог событий MCN Telecom — Виртуальная АТС (Звонки ВАТС, Переадресация и внутренние номера)»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-virtualnaya-ats-ocheredi-drugie-sobytiya-vats--db2b512e-8220-4265-9d11-5201932885c8/"><strong>«Каталог событий MCN Telecom — Виртуальная АТС (Очереди, Другие события ВАТС)»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-rabota-s-rechyu--6cb215de-0ad2-4c83-89c8-5b20db742aa1/"><strong>«Каталог событий MCN Telecom — Работа с речью»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-avtorizatsiya-po-zvonku--b186d668-e72b-4353-9db8-586322a9a608/"><strong>«Каталог событий MCN Telecom — Авторизация по звонку»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-avtozvonki-2-0--f05488ad-7913-4edb-9d21-b69347ec3c5d/"><strong>«Каталог событий MCN Telecom — Автозвонки 2.0»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-golosovoy-robot--dd780c4b-0201-4c45-afcd-3328fbe45349/"><strong>«Каталог событий MCN Telecom — Голосовой робот»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-ii-agent--852b3373-bf9f-4be9-813a-f14a1493b0d8/"><strong>«Каталог событий MCN Telecom — ИИ-агент»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-kontakt-tsentr--5d8c9cc8-84fc-4ca5-a0b7-9cc8ab145d18/"><strong>«Каталог событий MCN Telecom — Контакт-центр»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-kolltreking--c0d70ea5-e967-437f-883e-6d740d9e7b85/"><strong>«Каталог событий MCN Telecom — Коллтрекинг»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-rabota-s-rechyu--6cb215de-0ad2-4c83-89c8-5b20db742aa1/"><strong>«Каталог событий MCN Telecom — Работа с речью»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-telefoniya--848aaaa0-012a-4018-9a30-885ed57ed74f/"><strong>«Каталог событий MCN Telecom — Телефония»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-chat-boty--a181591b-991a-46f2-8421-0692b1327c2b/"><strong>«Каталог событий MCN Telecom — Чат-боты»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-sms--01836f81-a9bc-4fe2-afeb-deda6d30e937/"><strong>«Каталог событий MCN Telecom — SMS»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-sostoyanie-schyota--f9f0fb4b-e84e-4902-ab67-0ac1190f593a"><strong>«Каталог событий MCN Telecom — Состояние счёта»</strong></a></p>
+<h2 id="общий-формат-события"><a aria-hidden="true" tabindex="-1" href="#общий-формат-события"><span class="icon icon-link"></span></a>Общий формат события</h2>
+<p>Все события используют общую обёртку <code>Envelope</code>:</p>
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; одинаков при повторных доставках и используется для дедупликации</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p>Для каждого события приведены описание полей <code>data</code> и пример <code>Payload</code>.</p>
+<h2 id="создание-контакта"><a aria-hidden="true" tabindex="-1" href="#создание-контакта"><span class="icon icon-link"></span></a>Создание контакта</h2>
+<details>
+<summary>Integration_create_contact - Создание контакта в адресной книге</summary>
+<p><strong>Payload:</strong> <code>allOf</code> — общий <code>Envelope</code> + данные события.</p>
+<h2 id="envelope"><a aria-hidden="true" tabindex="-1" href="#envelope"><span class="icon icon-link"></span></a>Envelope</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события — см. <code>components/messages</code></td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; используется для дедупликации повторных доставок</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<h2 id="data"><a aria-hidden="true" tabindex="-1" href="#data"><span class="icon icon-link"></span></a><code>data</code></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>accountId</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер лицевого счёта; дублирует <code>account_id</code> из <code>Envelope</code></td></tr><tr><td><code>eventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дублирует <code>event_type</code> события</td></tr><tr><td><code>id</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уникальный технический идентификатор события (UUID)</td></tr><tr><td><code>type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Источник изменения контакта (<code>external_event</code> — контакт изменён во внешней системе)</td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p><strong>Пример:</strong> Payload</p>
+<pre><code class="language-json">{
+&quot;account_id&quot;: 10001,
+  &quot;event_type&quot;: &quot;integration_create_contact&quot;,
+  &quot;created_at&quot;: &quot;2026-07-01T23:20:51.627Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;5b133904-6192-49d2-abbc-f95be887fb70&quot;,
+  &quot;data&quot;: {
+    &quot;accountId&quot;: 10001,
+    &quot;data&quot;: {
+      &quot;isBlacklist&quot;: false,
+      &quot;additionalFields&quot;: [],
+      &quot;eventVersion&quot;: 2,
+      &quot;source&quot;: &quot;web_ab&quot;,
+      &quot;clientAccountId&quot;: 142493,
+      &quot;eventTs&quot;: 1782937250619,
+      &quot;phoneNumbers&quot;: [
+        {
+          &quot;accountId&quot;: 10001,
+          &quot;contactId&quot;: 4584324,
+          &quot;id&quot;: 9997217,
+          &quot;value&quot;: &quot;79000000016&quot;
+        }
+      ],
+      &quot;emails&quot;: [],
+      &quot;accountId&quot;: 10001,
+      &quot;createdAt&quot;: &quot;2026-07-01T20:20:50.539Z&quot;,
+      &quot;isDeleted&quot;: false,
+      &quot;name&quot;: &quot;ИП Иванов Иван Иванович&quot;,
+      &quot;eventName&quot;: &quot;create_contact&quot;,
+      &quot;socialMedias&quot;: [],
+      &quot;id&quot;: 4584324,
+      &quot;updatedAt&quot;: &quot;2026-07-01T20:20:50.539Z&quot;,
+      &quot;isFavorite&quot;: false
+    },
+    &quot;eventType&quot;: &quot;integration_create_contact&quot;,
+    &quot;id&quot;: &quot;07ce776f-f4c5-4f8a-b175-7a0045d77cee&quot;,
+    &quot;type&quot;: &quot;external_event&quot;
+  }
+}
+</code></pre>
+</details>
+<h2 id="изменение-контакта"><a aria-hidden="true" tabindex="-1" href="#изменение-контакта"><span class="icon icon-link"></span></a>Изменение контакта</h2>
+<details>
+<summary>Integration_update_contact - Обновление данных контакта из адресной книги</summary>
+<p><strong>Payload:</strong> <code>allOf</code> — общий <code>Envelope</code> + данные события.</p>
+<h2 id="envelope-1"><a aria-hidden="true" tabindex="-1" href="#envelope-1"><span class="icon icon-link"></span></a>Envelope</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события — см. <code>components/messages</code></td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; используется для дедупликации повторных доставок</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<h2 id="data-1"><a aria-hidden="true" tabindex="-1" href="#data-1"><span class="icon icon-link"></span></a><code>data</code></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>accountId</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер лицевого счёта</td></tr><tr><td><code>eventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>id</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уникальный технический идентификатор события (UUID)</td></tr><tr><td><code>type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Источник изменения контакта (<code>external_event</code> — контакт изменён во внешней системе)</td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p><strong>Пример:</strong> Payload</p>
+<pre><code class="language-json">{
+&quot;account_id&quot;: 10001,
+  &quot;event_type&quot;: &quot;integration_update_contact&quot;,
+  &quot;created_at&quot;: &quot;2026-07-01T20:40:25.243Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;5b133904-6192-49d2-abbc-f95be887fb70&quot;,
+  &quot;data&quot;: {
+    &quot;accountId&quot;: 10001,
+    &quot;data&quot;: {
+      &quot;isBlacklist&quot;: false,
+      &quot;updatedBy&quot;: 37406,
+      &quot;additionalFields&quot;: [],
+      &quot;contactId&quot;: 4584260,
+      &quot;eventVersion&quot;: 2,
+      &quot;numbers&quot;: [
+        &quot;79000000017&quot;
+      ],
+      &quot;fullName&quot;: &quot;79000000017&quot;,
+      &quot;contactsGroupIds&quot;: [],
+      &quot;source&quot;: &quot;web_ab&quot;,
+      &quot;eventTs&quot;: 1782927624326,
+      &quot;phoneNumbers&quot;: [],
+      &quot;emails&quot;: [],
+      &quot;accountId&quot;: 10001,
+      &quot;createdAt&quot;: &quot;2026-07-01T17:32:05.481Z&quot;,
+      &quot;isDeleted&quot;: false,
+      &quot;createdBy&quot;: 37406,
+      &quot;name&quot;: &quot;79000000017&quot;,
+      &quot;eventName&quot;: &quot;update_contact&quot;,
+      &quot;socialMedias&quot;: [],
+      &quot;customerIds&quot;: [],
+      &quot;id&quot;: 4584260,
+      &quot;updatedAt&quot;: &quot;2026-07-01T17:40:24.289Z&quot;,
+      &quot;isFavorite&quot;: false
+    },
+    &quot;eventType&quot;: &quot;integration_update_contact&quot;,
+    &quot;id&quot;: &quot;8865c584-772b-4897-8195-f22b8c0072a9&quot;,
+    &quot;type&quot;: &quot;external_event&quot;
+  }
+}
+</code></pre>
+</details>
+<h2 id="работа-с-корзиной"><a aria-hidden="true" tabindex="-1" href="#работа-с-корзиной"><span class="icon icon-link"></span></a>Работа с корзиной</h2>
+<details>
+<summary>Integration_update_contact_bulk - Добавление контакта в корзину</summary>
+<p><strong>Payload:</strong> <code>allOf</code> — общий <code>Envelope</code> + данные события.</p>
+<h2 id="envelope-2"><a aria-hidden="true" tabindex="-1" href="#envelope-2"><span class="icon icon-link"></span></a>Envelope</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события — см. <code>components/messages</code></td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; используется для дедупликации повторных доставок</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<h2 id="data-2"><a aria-hidden="true" tabindex="-1" href="#data-2"><span class="icon icon-link"></span></a><code>data</code></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>accountId</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер лицевого счёта</td></tr><tr><td><code>eventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>id</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уникальный технический идентификатор события (UUID)</td></tr><tr><td><code>type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Источник изменения контакта (<code>external_event</code> — контакт изменён во внешней системе)</td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p><strong>Пример:</strong> Payload</p>
+<pre><code class="language-json">{
+&quot;account_id&quot;: 0,
+  &quot;event_type&quot;: &quot;string&quot;,
+  &quot;created_at&quot;: &quot;2019-08-24T14:15:22Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;0c14c6a6-6f50-4d1e-b0c4-b46ff43ba6a1&quot;,
+  &quot;data&quot;: {
+    &quot;accountId&quot;: 0,
+    &quot;eventType&quot;: &quot;string&quot;,
+    &quot;id&quot;: &quot;string&quot;,
+    &quot;type&quot;: &quot;string&quot;
+  }
+}
+</code></pre>
+</details>
+<details>
+<summary>Integration_delete_contact_bulk - Удаление контакта из корзины</summary>
+<p><strong>Payload:</strong> <code>allOf</code> — общий <code>Envelope</code> + данные события.</p>
+<h2 id="envelope-3"><a aria-hidden="true" tabindex="-1" href="#envelope-3"><span class="icon icon-link"></span></a>Envelope</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события — см. <code>components/messages</code></td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; используется для дедупликации повторных доставок</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<h2 id="data-3"><a aria-hidden="true" tabindex="-1" href="#data-3"><span class="icon icon-link"></span></a><code>data</code></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>accountId</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер лицевого счёта</td></tr><tr><td><code>eventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>id</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уникальный технический идентификатор события (UUID)</td></tr><tr><td><code>type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Источник изменения контакта (<code>external_event</code> — контакт изменён во внешней системе)</td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p><strong>Пример:</strong> Payload</p>
+<pre><code class="language-json">{
+&quot;account_id&quot;: 10001,
+  &quot;event_type&quot;: &quot;integration_delete_contact_bulk&quot;,
+  &quot;created_at&quot;: &quot;2026-06-18T18:16:18.918Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;5b133904-6192-49d2-abbc-f95be887fb70&quot;,
+  &quot;data&quot;: {
+    &quot;accountId&quot;: 10001,
+    &quot;data&quot;: {
+      &quot;accountId&quot;: 10001,
+      &quot;eventVersion&quot;: 2,
+      &quot;ids&quot;: [
+        4479221
+      ],
+      &quot;eventName&quot;: &quot;delete_contact_bulk&quot;,
+      &quot;eventTs&quot;: 1781795778463
+    },
+    &quot;eventType&quot;: &quot;integration_delete_contact_bulk&quot;,
+    &quot;id&quot;: &quot;0fa9e3c9-5dd2-4e33-b771-175f82fe92d2&quot;,
+    &quot;type&quot;: &quot;external_event&quot;
+  }
+}
+</code></pre>
+</details>

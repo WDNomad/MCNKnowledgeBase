@@ -31,9 +31,11 @@ fun ArticlesScreen(
         mutableStateOf("")
     }
     LaunchedEffect(categoryId) {
-
-        articles =
-            viewModel.loadArticles(categoryId)
+        try {
+            articles = viewModel.loadArticles(categoryId)
+        } catch (e: Exception) {
+            articles = emptyList()
+        }
     }
     val filteredArticles = articles.filter {
 

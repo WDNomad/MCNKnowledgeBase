@@ -13,3 +13,8 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Inputs downloaded by tools/build_catalog.py; the generated assets are tracked.
+/sitemap-source.xml
+/article-source.html
+__pycache__/

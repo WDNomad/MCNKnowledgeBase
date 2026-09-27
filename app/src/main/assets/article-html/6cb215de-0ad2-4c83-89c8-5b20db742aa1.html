@@ -1,0 +1,1490 @@
+<h1 id="работа-с-речью"><a aria-hidden="true" tabindex="-1" href="#работа-с-речью"><span class="icon icon-link"></span></a>Работа с речью</h1>
+<p>События (вебхуки и триггеры), связанные с распознаванием, синтезом, транскрибацией и анализом речи.</p>
+<p>Единый <code>Envelope</code> используется для всех событий: один <code>channel</code> соответствует одному <code>event_type</code>.</p>
+<h2 id="содержание"><a aria-hidden="true" tabindex="-1" href="#содержание"><span class="icon icon-link"></span></a>Содержание</h2>
+<ul>
+<li><a href="#%D1%82%D1%80%D0%B0%D0%BD%D1%81%D0%BA%D1%80%D0%B8%D0%B1%D0%B0%D1%86%D0%B8%D1%8F">Транскрибация</a></li>
+<li><a href="#%D1%80%D0%B0%D1%81%D0%BF%D0%BE%D0%B7%D0%BD%D0%B0%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%B8-%D1%81%D0%B8%D0%BD%D1%82%D0%B5%D0%B7-%D1%80%D0%B5%D1%87%D0%B8">Распознавание и синтез речи</a></li>
+<li><a href="#%D1%80%D0%B5%D1%87%D0%B5%D0%B2%D0%B0%D1%8F-%D0%B0%D0%BD%D0%B0%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B0">Речевая аналитика</a></li>
+</ul>
+<p>Также см.:<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-virtualnaya-ats-zvonki-vats-pereadresatsiya-i-vnutrennie-nomera--c8d6608a-4125-4ace-9669-8d8351c72a65/"><strong>«Каталог событий MCN Telecom — Виртуальная АТС (Звонки ВАТС, Переадресация и внутренние номера)»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-virtualnaya-ats-ocheredi-drugie-sobytiya-vats--db2b512e-8220-4265-9d11-5201932885c8/"><strong>«Каталог событий MCN Telecom — Виртуальная АТС (Очереди, Другие события ВАТС)»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-rabota-s-rechyu--6cb215de-0ad2-4c83-89c8-5b20db742aa1/"><strong>«Каталог событий MCN Telecom — Работа с речью»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-avtorizatsiya-po-zvonku--b186d668-e72b-4353-9db8-586322a9a608/"><strong>«Каталог событий MCN Telecom — Авторизация по звонку»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-avtozvonki-2-0--f05488ad-7913-4edb-9d21-b69347ec3c5d/"><strong>«Каталог событий MCN Telecom — Автозвонки 2.0»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-adresnaya-kniga--693360fe-3b95-44a7-859e-534bee22318c/"><strong>«Каталог событий MCN Telecom — Адресная книга»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-golosovoy-robot--dd780c4b-0201-4c45-afcd-3328fbe45349/"><strong>«Каталог событий MCN Telecom — Голосовой робот»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-ii-agent--852b3373-bf9f-4be9-813a-f14a1493b0d8/"><strong>«Каталог событий MCN Telecom — ИИ-агент»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-kontakt-tsentr--5d8c9cc8-84fc-4ca5-a0b7-9cc8ab145d18/"><strong>«Каталог событий MCN Telecom — Контакт-центр»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-kolltreking--c0d70ea5-e967-437f-883e-6d740d9e7b85/"><strong>«Каталог событий MCN Telecom — Коллтрекинг»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-telefoniya--848aaaa0-012a-4018-9a30-885ed57ed74f/"><strong>«Каталог событий MCN Telecom — Телефония»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-chat-boty--a181591b-991a-46f2-8421-0692b1327c2b/"><strong>«Каталог событий MCN Telecom — Чат-боты»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-sms--01836f81-a9bc-4fe2-afeb-deda6d30e937/"><strong>«Каталог событий MCN Telecom — SMS»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-sostoyanie-schyota--f9f0fb4b-e84e-4902-ab67-0ac1190f593a"><strong>«Каталог событий MCN Telecom — Состояние счёта»</strong></a></p>
+<h2 id="общий-формат-события"><a aria-hidden="true" tabindex="-1" href="#общий-формат-события"><span class="icon icon-link"></span></a>Общий формат события</h2>
+<p>Все события используют общую обёртку <code>Envelope</code>:</p>
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; одинаков при повторных доставках и используется для дедупликации</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p>Для каждого события приведены описание полей <code>data</code> и пример <code>Payload</code>.</p>
+<h2 id="транскрибация"><a aria-hidden="true" tabindex="-1" href="#транскрибация"><span class="icon icon-link"></span></a>Транскрибация</h2>
+<details>
+<summary>SpeechKitDialog - ВАТС: Реплика элемента «Вопрос-Ответ»</summary>
+<h1 id="ватс-реплика-элемента-вопрос-ответ"><a aria-hidden="true" tabindex="-1" href="#ватс-реплика-элемента-вопрос-ответ"><span class="icon icon-link"></span></a>ВАТС: Реплика элемента «Вопрос-Ответ»</h1>
+<p><strong>Событие:</strong> Транскрибация отдельной фразы диалога<br>
+<strong>Payload:</strong> <code>allOf</code> — общий <code>Envelope</code> + данные события.</p>
+<h2 id="envelope"><a aria-hidden="true" tabindex="-1" href="#envelope"><span class="icon icon-link"></span></a>Envelope</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события — см. <code>components/messages</code></td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; одинаков при повторных доставках, используется для дедупликации</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<h2 id="data"><a aria-hidden="true" tabindex="-1" href="#data"><span class="icon icon-link"></span></a><code>data</code></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>linkedid</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID связанного звонка; объединяет все плечи одного вызова</td></tr><tr><td><code>link_uniqueid_term</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td><code>uniqueId</code> принимающей стороны связанного звонка</td></tr><tr><td><code>speechkit_id</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Уникальный ID блока «Вопрос-Ответ»</td></tr><tr><td><code>speechkit_dialog_id</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>ID события</td></tr><tr><td><code>eventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>dialog_value</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Содержание диалога</td></tr><tr><td><code>server_id</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Внутренний ID сервера, обработавшего событие</td></tr><tr><td><code>accountId</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер лицевого счёта</td></tr><tr><td><code>vpbx_id</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер ВАТС</td></tr><tr><td><code>number</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер звонящего</td></tr><tr><td><code>account_id</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер ЛС</td></tr><tr><td><code>dialog_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип диалога</td></tr><tr><td><code>uniqueid</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уникальный ID <code>call-leg</code>, формат <code>{systemName}-{timestamp}.{seq}</code></td></tr><tr><td><code>event_time</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дата события</td></tr><tr><td><code>did</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер, на который звонили</td></tr><tr><td><code>vpbxId</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер ВАТС</td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p><strong>Пример:</strong> Payload</p>
+<pre><code class="language-json">{
+  &quot;account_id&quot;: 10001,
+  &quot;event_type&quot;: &quot;SpeechKitDialog&quot;,
+  &quot;created_at&quot;: &quot;2026-07-01T18:38:08.575Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;5b133904-6192-49d2-abbc-f95be887fb70&quot;,
+  &quot;data&quot;: {
+    &quot;linkedid&quot;: &quot;125-1782920236.12168312&quot;,
+    &quot;link_uniqueid_term&quot;: &quot;125-1782920236.12168312-1782920287-1&quot;,
+    &quot;speechkit_id&quot;: 2739,
+    &quot;speechkit_dialog_id&quot;: 5357377,
+    &quot;eventType&quot;: &quot;SpeechKitDialog&quot;,
+    &quot;dialog_value&quot;: &quot;Назовите пожалуйста цель звонка. Новый клиент! Действующий! Или другое!&quot;,
+    &quot;server_id&quot;: 32,
+    &quot;accountId&quot;: 10001,
+    &quot;vpbx_id&quot;: 280,
+    &quot;number&quot;: &quot;196&quot;,
+    &quot;account_id&quot;: 10001,
+    &quot;dialog_type&quot;: &quot;question&quot;,
+    &quot;uniqueid&quot;: &quot;125-1782920255.12168482&quot;,
+    &quot;event_time&quot;: &quot;2026-07-01T15:38:07.542103Z&quot;,
+    &quot;did&quot;: 30337,
+    &quot;vpbxId&quot;: 280
+  }
+}
+</code></pre>
+</details>
+<details>
+<summary>TranscribationFinished - Завершение транскрибации</summary>
+<h1 id="завершение-транскрибации"><a aria-hidden="true" tabindex="-1" href="#завершение-транскрибации"><span class="icon icon-link"></span></a>Завершение транскрибации</h1>
+<p><strong>Событие:</strong> Завершение транскрибации<br>
+<strong>Payload:</strong> <code>allOf</code> — общий <code>Envelope</code> + данные события.</p>
+<h2 id="envelope-1"><a aria-hidden="true" tabindex="-1" href="#envelope-1"><span class="icon icon-link"></span></a>Envelope</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события — см. <code>components/messages</code></td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; используется для дедупликации повторных доставок</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<h2 id="data-1"><a aria-hidden="true" tabindex="-1" href="#data-1"><span class="icon icon-link"></span></a><code>data</code></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>linkedId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID связанного звонка</td></tr><tr><td><code>accountId</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер лицевого счёта</td></tr><tr><td><code>eventId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уникальный ID события транскрибации</td></tr><tr><td><code>transcribationText</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Полный текст транскрибации разговора</td></tr><tr><td><code>fileName</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Название файла</td></tr><tr><td><code>transcribationId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер транскрибации</td></tr><tr><td><code>numA</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер звонящего</td></tr><tr><td><code>callUniqueId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уникальный номер звонка</td></tr><tr><td><code>eventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>numB</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер, на который звонили</td></tr><tr><td><code>vpbxId</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер ВАТС</td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p><strong>Пример:</strong> Payload</p>
+<pre><code class="language-json">{
+
+  &quot;account_id&quot;: 10001,
+  &quot;event_type&quot;: &quot;TranscribationFinished&quot;,
+  &quot;created_at&quot;: &quot;2026-07-01T20:44:40.688Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;5b133904-6192-49d2-abbc-f95be887fb70&quot;,
+  &quot;data&quot;: {
+    &quot;linkedId&quot;: &quot;125-1782927846.12192332&quot;,
+    &quot;accountId&quot;: 10001,
+    &quot;eventId&quot;: &quot;0973549e-1b82-4a78-af62-0bf1dcc04fd7&quot;,
+    &quot;transcribationText&quot;: &quot;(2): Алло.\n(1): Слушай, я че тебе еще звонил, я тебе в элемент там написал, типа Дина есть?\n(2): А Давай. Да, я вижу, сейчас я посмотрю, я сейчас посмотрю, тебе отвечу.\n(1): Да окей у меня в принципе все готово, если что я направлю все.\n(2): Да, Да давай давай, ага?\n(1): Давай.&quot;,
+    &quot;fileName&quot;: &quot;20260701-204406-170-9410-125178292784612192332&quot;,
+    &quot;data&quot;: {
+      &quot;first&quot;: [
+        {
+          &quot;startTime&quot;: &quot;8.780&quot;,
+          &quot;text&quot;: &quot;Слушай, я че тебе еще звонил, я тебе в элемент там написал, типа Дина есть?&quot;,
+          &quot;endTime&quot;: &quot;12.790&quot;
+        },
+        {
+          &quot;startTime&quot;: &quot;15.610&quot;,
+          &quot;text&quot;: &quot;Да окей у меня в принципе все готово, если что я направлю все.&quot;,
+          &quot;endTime&quot;: &quot;18.570&quot;
+        },
+        {
+          &quot;startTime&quot;: &quot;19.750&quot;,
+          &quot;text&quot;: &quot;Давай.&quot;,
+          &quot;endTime&quot;: &quot;20.110&quot;
+        }
+      ],
+      &quot;second&quot;: [
+        {
+          &quot;startTime&quot;: &quot;8.189&quot;,
+          &quot;text&quot;: &quot;Алло.&quot;,
+          &quot;endTime&quot;: &quot;8.469&quot;
+        },
+        {
+          &quot;startTime&quot;: &quot;9.950&quot;,
+          &quot;text&quot;: &quot;А&quot;,
+          &quot;endTime&quot;: &quot;10.070&quot;
+        },
+        {
+          &quot;startTime&quot;: &quot;11.270&quot;,
+          &quot;text&quot;: &quot;Давай.&quot;,
+          &quot;endTime&quot;: &quot;11.590&quot;
+        },
+        {
+          &quot;startTime&quot;: &quot;12.299&quot;,
+          &quot;text&quot;: &quot;Да, я вижу, сейчас я посмотрю, я сейчас посмотрю, тебе отвечу.&quot;,
+          &quot;endTime&quot;: &quot;15.139&quot;
+        },
+        {
+          &quot;startTime&quot;: &quot;16.870&quot;,
+          &quot;text&quot;: &quot;Да,&quot;,
+          &quot;endTime&quot;: &quot;17.350&quot;
+        },
+        {
+          &quot;startTime&quot;: &quot;19.150&quot;,
+          &quot;text&quot;: &quot;Да давай давай, ага?&quot;,
+          &quot;endTime&quot;: &quot;20.510&quot;
+        }
+      ]
+    },
+    &quot;transcribationId&quot;: &quot;87f08810-1197-4236-b414-9ef3975ee5dc&quot;,
+    &quot;numA&quot;: &quot;170&quot;,
+    &quot;callUniqueId&quot;: &quot;125-1782927846.12192332&quot;,
+    &quot;eventType&quot;: &quot;TranscribationFinished&quot;,
+    &quot;numB&quot;: &quot;9410&quot;,
+    &quot;vpbxId&quot;: 280
+  }
+}
+</code></pre>
+</details>
+<details>
+<summary>ResponseTranscription - Завершение транскрибации реплики ИИ-агента</summary>
+<h1 id="ии-агент-завершение-транскрибации"><a aria-hidden="true" tabindex="-1" href="#ии-агент-завершение-транскрибации"><span class="icon icon-link"></span></a>ИИ Агент: Завершение транскрибации</h1>
+<p><strong>Описание:</strong> Событие завершения транскрибации реплики ИИ-агента.<br>
+<strong>Payload:</strong> <code>allOf</code> — общий <code>Envelope</code> + данные события.</p>
+<h2 id="envelope-2"><a aria-hidden="true" tabindex="-1" href="#envelope-2"><span class="icon icon-link"></span></a>Envelope</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события — см. <code>components/messages</code></td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; используется для дедупликации повторных доставок</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<h2 id="data-2"><a aria-hidden="true" tabindex="-1" href="#data-2"><span class="icon icon-link"></span></a><code>data</code></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>id</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Идентификатор события</td></tr><tr><td><code>type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>eventTs</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Unix-время (мс) создания события на стороне сценарного движка</td></tr><tr><td><code>eventName</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Имя события</td></tr><tr><td><code>eventVersion</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Версия внутреннего формата события сценария</td></tr><tr><td><code>accountId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер лицевого счёта; дублирует <code>account_id</code> из Envelope</td></tr><tr><td><code>sessionId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID сессии ИИ-агента</td></tr><tr><td><code>transcription</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Текст транскрибации реплики ИИ-агента</td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p><strong>Пример:</strong> Payload</p>
+<pre><code class="language-json">{
+  &quot;account_id&quot;: 0,
+  &quot;event_type&quot;: &quot;string&quot;,
+  &quot;created_at&quot;: &quot;2019-08-24T14:15:22Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;0c14c6a6-6f50-4d1e-b0c4-b46ff43ba6a1&quot;,
+  &quot;data&quot;: {
+    &quot;id&quot;: &quot;string&quot;,
+    &quot;type&quot;: &quot;string&quot;,
+    &quot;eventTs&quot;: &quot;string&quot;,
+    &quot;eventName&quot;: &quot;string&quot;,
+    &quot;eventVersion&quot;: &quot;string&quot;,
+    &quot;accountId&quot;: &quot;string&quot;,
+    &quot;sessionId&quot;: &quot;string&quot;,
+  }
+}
+</code></pre>
+</details>
+<h2 id="распознавание-и-синтез-речи"><a aria-hidden="true" tabindex="-1" href="#распознавание-и-синтез-речи"><span class="icon icon-link"></span></a>Распознавание и синтез речи</h2>
+<details>
+<summary>SpeechResult - Распознавание речи</summary>
+<h1 id="распознавание-речи"><a aria-hidden="true" tabindex="-1" href="#распознавание-речи"><span class="icon icon-link"></span></a>Распознавание речи</h1>
+<p><strong>Событие:</strong> Результат распознавания речи<br>
+<strong>Payload:</strong> <code>allOf</code> — общий <code>Envelope</code> + данные события.</p>
+<h2 id="envelope-3"><a aria-hidden="true" tabindex="-1" href="#envelope-3"><span class="icon icon-link"></span></a>Envelope</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события — см. <code>components/messages</code></td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; одинаков при повторных доставках, используется для дедупликации</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<h2 id="data-3"><a aria-hidden="true" tabindex="-1" href="#data-3"><span class="icon icon-link"></span></a><code>data</code></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>destLinkName</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Распознанный вариант ответа; если вариант не подошёл, приходит <code>\t</code></td></tr><tr><td><code>ivrSchemaId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID IVR-схемы, на которую поступил звонок</td></tr><tr><td><code>userEventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дублирует <code>event_type</code> — тип события AMI UserEvent</td></tr><tr><td><code>channel</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Имя канала Asterisk (SIP/PJSIP, Local и др.)</td></tr><tr><td><code>privilege</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уровень логирования/видимости события в Asterisk AMI</td></tr><tr><td><code>exten</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Extension диалплана, где сработало событие (для входящих обычно <code>s</code>)</td></tr><tr><td><code>channelState</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Код состояния Asterisk-канала (см. <code>channelStateDesc</code>)</td></tr><tr><td><code>callerIdNum</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер вызывающего абонента (Caller ID number)</td></tr><tr><td><code>systemName</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID Asterisk-сервера (номер хаба)</td></tr><tr><td><code>dateReceived</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Момент получения события (локальное время сервера)</td></tr><tr><td><code>context</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Контекст события</td></tr><tr><td><code>sttAnswer</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Результат распознавания речи</td></tr><tr><td><code>callerID</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID звонящего (номер телефона)</td></tr><tr><td><code>event</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дублирует <code>event_type</code> — служебное поле Asterisk UserEvent</td></tr><tr><td><code>ivrObjectId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID объекта на IVR-схеме</td></tr><tr><td><code>timestamp</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Unix-время события</td></tr><tr><td><code>callId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Идентификатор звонка</td></tr><tr><td><code>linkedId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID связанного звонка</td></tr><tr><td><code>callerNumber</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер звонящего абонента</td></tr><tr><td><code>dateReceivedAtUTC</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Время получения Kafka-коннектором в UTC, до микросекунд; дублирует <code>dateReceived</code></td></tr><tr><td><code>eventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>priority</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Приоритет текущего шага диалплана Asterisk</td></tr><tr><td><code>accountId</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер ЛС</td></tr><tr><td><code>channelStateDesc</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Расшифровка <code>channelState</code> (например <code>Up</code>, <code>Ring</code>, <code>Down</code>)</td></tr><tr><td><code>callerIdName</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Имя вызывающего абонента, если передано АТС/оператором</td></tr><tr><td><code>did</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер телефона</td></tr><tr><td><code>uniqueId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уникальный ID <code>call-leg</code>, формат <code>{systemName}-{timestamp}.{seq}</code></td></tr><tr><td><code>vpbxId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер Виртуальной АТС</td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p><strong>Пример:</strong> Payload</p>
+<pre><code class="language-json">{
+ &quot;account_id&quot;: 10001,
+  &quot;event_type&quot;: &quot;SpeechResult&quot;,
+  &quot;created_at&quot;: &quot;2026-07-01T17:11:23.448Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;5b133904-6192-49d2-abbc-f95be887fb70&quot;,
+  &quot;data&quot;: {
+    &quot;destLinkName&quot;: &quot;t&quot;,
+    &quot;ivrSchemaId&quot;: &quot;51325&quot;,
+    &quot;userEventType&quot;: &quot;SpeechResult&quot;,
+    &quot;channel&quot;: &quot;Local/s@autodial-client-leg-0002e27d;1&quot;,
+    &quot;privilege&quot;: &quot;user,all&quot;,
+    &quot;exten&quot;: &quot;s&quot;,
+    &quot;channelState&quot;: 6,
+    &quot;callerIdNum&quot;: &quot;79000000035&quot;,
+    &quot;systemName&quot;: &quot;125&quot;,
+    &quot;dateReceived&quot;: &quot;Jul 1, 2026, 5:11:23 PM&quot;,
+    &quot;context&quot;: &quot;speech-recog&quot;,
+    &quot;sttAnswer&quot;: &quot;&quot;,
+    &quot;callerID&quot;: &quot;79000000035&quot;,
+    &quot;event&quot;: &quot;SpeechResult&quot;,
+    &quot;ivrObjectId&quot;: &quot;11020&quot;,
+    &quot;timestamp&quot;: 1782915083,
+    &quot;callId&quot;: &quot;125-1782915017.12142878&quot;,
+    &quot;linkedId&quot;: &quot;125-1782915017.12142877&quot;,
+    &quot;callerNumber&quot;: &quot;79000000035&quot;,
+    &quot;dateReceivedAtUTC&quot;: &quot;2026-07-01 14:11:23.243751&quot;,
+    &quot;eventType&quot;: &quot;SpeechResult&quot;,
+    &quot;priority&quot;: 119,
+    &quot;accountId&quot;: 10001,
+    &quot;channelStateDesc&quot;: &quot;Up&quot;,
+    &quot;callerIdName&quot;: &quot;Autodialer&quot;,
+    &quot;did&quot;: &quot;51325&quot;,
+    &quot;uniqueId&quot;: &quot;125-1782915017.12142877&quot;,
+    &quot;vpbxId&quot;: &quot;280&quot;
+  }
+}
+</code></pre>
+</details>
+<details>
+<summary>SpeechSynthesis - Событие синтеза речи  </summary>
+<h1 id="синтез-речи"><a aria-hidden="true" tabindex="-1" href="#синтез-речи"><span class="icon icon-link"></span></a>Синтез речи</h1>
+<p><strong>Событие:</strong> Событие синтеза речи<br>
+<strong>Payload:</strong> <code>allOf</code> — общий <code>Envelope</code> + данные события.</p>
+<h2 id="envelope-4"><a aria-hidden="true" tabindex="-1" href="#envelope-4"><span class="icon icon-link"></span></a>Envelope</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события — см. <code>components/messages</code></td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; одинаков при повторных доставках, используется для дедупликации</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<h2 id="data-4"><a aria-hidden="true" tabindex="-1" href="#data-4"><span class="icon icon-link"></span></a><code>data</code></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>linkedID</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID связанного звонка</td></tr><tr><td><code>ivrSchemaId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID схемы ВАТС</td></tr><tr><td><code>numA</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер звонящего</td></tr><tr><td><code>channel</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Имя канала Asterisk (SIP/PJSIP, Local и др.)</td></tr><tr><td><code>privilege</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уровень логирования/видимости события в Asterisk AMI</td></tr><tr><td><code>exten</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Extension диалплана, где сработало событие (для входящих обычно <code>s</code>)</td></tr><tr><td><code>appData</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Служебные параметры приложения Asterisk (сырая строка)</td></tr><tr><td><code>numB</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер, на который звонили</td></tr><tr><td><code>callerIDani</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ANI — номер, определённый АТС/оператором как исходный</td></tr><tr><td><code>callerIdNum</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер вызывающего абонента (Caller ID number)</td></tr><tr><td><code>systemName</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID Asterisk-сервера (номер хаба)</td></tr><tr><td><code>peer</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Внутренний ID второй стороны звонка (Asterisk CEL peer)</td></tr><tr><td><code>dateReceived</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Момент получения события (локальное время сервера)</td></tr><tr><td><code>extra</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>JSON-строка с дополнительными данными события (Asterisk CEL)</td></tr><tr><td><code>eventTime</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дата события</td></tr><tr><td><code>context</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Контекст события</td></tr><tr><td><code>eventName</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Имя CEL-события, например <code>IVR_LINK_END</code></td></tr><tr><td><code>callerIDdnid</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>DNID — номер, на который был направлен вызов</td></tr><tr><td><code>text</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Текст синтеза речи</td></tr><tr><td><code>event</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дублирует <code>event_type</code> — служебное поле Asterisk UserEvent</td></tr><tr><td><code>callerIDrdnis</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>RDNIS — номер переадресовавшей стороны, если был редирект</td></tr><tr><td><code>uniqueID</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уникальный ID <code>call-leg</code>, формат <code>{systemName}-{timestamp}.{seq}</code></td></tr><tr><td><code>timestamp</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Время события</td></tr><tr><td><code>accountCode</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Account code канала; обычно совпадает с <code>account_id</code>, может быть пустым</td></tr><tr><td><code>dateReceivedAtUTC</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Время получения Kafka-коннектором в UTC, до микросекунд; дублирует <code>dateReceived</code></td></tr><tr><td><code>eventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>blockId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID блока на схеме ВАТС</td></tr><tr><td><code>accountId</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер лицевого счёта</td></tr><tr><td><code>peerAccount</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Код лицевого счёта второй стороны соединения</td></tr><tr><td><code>application</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Приложение Asterisk, сгенерировавшее событие</td></tr><tr><td><code>userField</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Служебное поле <code>userfield</code> канала Asterisk CEL</td></tr><tr><td><code>callerIdName</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Имя вызывающего абонента, если передано АТС/оператором</td></tr><tr><td><code>vpbxId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер ВАТС</td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p><strong>Пример:</strong> Payload</p>
+<pre><code class="language-json">{
+ &quot;account_id&quot;: 10001,
+  &quot;event_type&quot;: &quot;SpeechSynthesis&quot;,
+  &quot;created_at&quot;: &quot;2026-07-01T17:41:28.608Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;5b133904-6192-49d2-abbc-f95be887fb70&quot;,
+  &quot;data&quot;: {
+    &quot;linkedID&quot;: &quot;125-1782916886.12154245&quot;,
+    &quot;ivrSchemaId&quot;: &quot;42112&quot;,
+    &quot;numA&quot;: &quot;79000000036&quot;,
+    &quot;channel&quot;: &quot;SIP/sip-node1-000f97b9&quot;,
+    &quot;privilege&quot;: &quot;call,all&quot;,
+    &quot;exten&quot;: &quot;s&quot;,
+    &quot;appData&quot;: &quot;IVR_LINK_END,synthesis,3763,,42112,|Это тестовый вызов&quot;,
+    &quot;numB&quot;: &quot;79000000037&quot;,
+    &quot;callerIDani&quot;: &quot;79000000036&quot;,
+    &quot;callerIdNum&quot;: &quot;79000000036&quot;,
+    &quot;systemName&quot;: &quot;125&quot;,
+    &quot;peer&quot;: &quot;&quot;,
+    &quot;dateReceived&quot;: &quot;Jul 1, 2026, 5:41:28 PM&quot;,
+    &quot;extra&quot;: &quot;{\&quot;extra\&quot;:\&quot;synthesis,3763,,42112,|Это тестовый вызов\&quot;}&quot;,
+    &quot;eventTime&quot;: &quot;2026-07-01 17:41:28&quot;,
+    &quot;context&quot;: &quot;synthesis&quot;,
+    &quot;eventName&quot;: &quot;IVR_LINK_END&quot;,
+    &quot;callerIDdnid&quot;: &quot;79000000037&quot;,
+    &quot;text&quot;: &quot;Это тестовый вызов&quot;,
+    &quot;event&quot;: &quot;CEL&quot;,
+    &quot;callerIDrdnis&quot;: &quot;&quot;,
+    &quot;uniqueID&quot;: &quot;125-1782916886.12154245&quot;,
+    &quot;timestamp&quot;: &quot;Jul 1, 2026, 5:41:28 PM&quot;,
+    &quot;accountCode&quot;: &quot;10001&quot;,
+    &quot;dateReceivedAtUTC&quot;: &quot;2026-07-01 14:41:28.464432&quot;,
+    &quot;eventType&quot;: &quot;SpeechSynthesis&quot;,
+    &quot;blockId&quot;: &quot;3763&quot;,
+    &quot;accountId&quot;: 10001,
+    &quot;peerAccount&quot;: &quot;&quot;,
+    &quot;application&quot;: &quot;CELGenUserEvent&quot;,
+    &quot;userField&quot;: &quot;280&quot;,
+    &quot;callerIdName&quot;: &quot;79000000036&quot;,
+    &quot;vpbxId&quot;: &quot;280&quot;
+  }
+}
+</code></pre>
+</details>
+<h2 id="речевая-аналитика"><a aria-hidden="true" tabindex="-1" href="#речевая-аналитика"><span class="icon icon-link"></span></a>Речевая аналитика</h2>
+<details>
+<summary>Analyse_completed - Речевая аналитика. Результат</summary>
+<h1 id="речевая-аналитика-результат"><a aria-hidden="true" tabindex="-1" href="#речевая-аналитика-результат"><span class="icon icon-link"></span></a>Речевая аналитика. Результат</h1>
+<p><strong>Payload:</strong> <code>allOf</code> — общий <code>Envelope</code> + данные события.</p>
+<h2 id="envelope-5"><a aria-hidden="true" tabindex="-1" href="#envelope-5"><span class="icon icon-link"></span></a>Envelope</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события — см. <code>components/messages</code></td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; используется для дедупликации повторных доставок</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<h2 id="data-5"><a aria-hidden="true" tabindex="-1" href="#data-5"><span class="icon icon-link"></span></a><code>data</code></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>callId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Идентификатор звонка</td></tr><tr><td><code>accountId</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер лицевого счёта</td></tr><tr><td><code>calledTo</code></td><td><code>null</code></td><td style="text-align:center">✓</td><td>Номер/адрес, на который был направлен вызов</td></tr><tr><td><code>phone</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер телефона</td></tr><tr><td><code>id</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID события</td></tr><tr><td><code>eventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>internalNumber</code></td><td><code>null</code></td><td style="text-align:center">✓</td><td>Внутренний номер</td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p><strong>Пример:</strong> Payload</p>
+<pre><code class="language-json">{
+&quot;account_id&quot;: 10001,
+  &quot;event_type&quot;: &quot;analyse_completed&quot;,
+  &quot;created_at&quot;: &quot;2026-07-01T22:01:53.440Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;5b133904-6192-49d2-abbc-f95be887fb70&quot;,
+  &quot;data&quot;: {
+    &quot;callId&quot;: &quot;125-1782932380.12198910&quot;,
+    &quot;accountId&quot;: 10001,
+    &quot;eventData&quot;: {
+      &quot;accountId&quot;: 10001,
+      &quot;answeredIn&quot;: &quot;2026-07-01T19:01:50.242Z&quot;,
+      &quot;gptResponseResult&quot;: &quot;-, Клиент: Майл, -, Клиент запросил информацию о тарифах на городские номера для бизнеса, Проблема: Запрос тарифа (ОП), Упоминание акций: нет&quot;,
+      &quot;instruction&quot;: {
+        &quot;internalNumbers&quot;: [],
+        &quot;gptModel&quot;: {
+          &quot;name&quot;: &quot;gpt-4o-mini&quot;,
+          &quot;implement&quot;: &quot;openai&quot;,
+          &quot;id&quot;: 37,
+          &quot;isVisible&quot;: true,
+          &quot;slug&quot;: &quot;gpt-4o-mini&quot;
+        },
+        &quot;description&quot;: &quot;&quot;,
+        &quot;scenarios&quot;: [
+          {
+            &quot;accountId&quot;: 10001,
+            &quot;scenarioType&quot;: &quot;vpbx&quot;,
+            &quot;instructionId&quot;: 3,
+            &quot;scenarioId&quot;: 6906
+          },
+          {
+            &quot;accountId&quot;: 10001,
+            &quot;scenarioType&quot;: &quot;vpbx&quot;,
+            &quot;instructionId&quot;: 3,
+            &quot;scenarioId&quot;: 6907
+          },
+          {
+            &quot;accountId&quot;: 10001,
+            &quot;scenarioType&quot;: &quot;chatbots&quot;,
+            &quot;instructionId&quot;: 3,
+            &quot;scenarioId&quot;: 80626
+          },
+          {
+            &quot;accountId&quot;: 10001,
+            &quot;scenarioType&quot;: &quot;chatbots&quot;,
+            &quot;instructionId&quot;: 3,
+            &quot;scenarioId&quot;: 75103
+          },
+          {
+            &quot;accountId&quot;: 10001,
+            &quot;scenarioType&quot;: &quot;chatbots&quot;,
+            &quot;instructionId&quot;: 3,
+            &quot;scenarioId&quot;: 80629
+          },
+          {
+            &quot;accountId&quot;: 10001,
+            &quot;scenarioType&quot;: &quot;chatbots&quot;,
+            &quot;instructionId&quot;: 3,
+            &quot;scenarioId&quot;: 78235
+          }
+        ],
+        &quot;type&quot;: &quot;contact_center&quot;,
+        &quot;mode&quot;: &quot;auto&quot;,
+        &quot;maxTagSize&quot;: null,
+        &quot;flex&quot;: false,
+        &quot;isCommon&quot;: false,
+        &quot;roomsIds&quot;: [
+          &quot;281e5f8d-f213-47b7-801e-407713e388a7&quot;
+        ],
+        &quot;id&quot;: 3,
+        &quot;gptTokens&quot;: 1000,
+        &quot;isArchive&quot;: false,
+        &quot;gptModelId&quot;: 37,
+        &quot;groups&quot;: [],
+        &quot;gptTemperature&quot;: 0.2,
+        &quot;users&quot;: [],
+        &quot;isSystem&quot;: true,
+        &quot;accountId&quot;: 10001,
+        &quot;externalNumbers&quot;: [],
+        &quot;queues&quot;: [],
+        &quot;name&quot;: &quot;Краткое содержание диалога&quot;,
+        &quot;tokenUsed&quot;: 904,
+        &quot;accounts&quot;: [
+          10001
+        ],
+        &quot;writesTag&quot;: &quot;never&quot;,
+        &quot;gptDescription&quot;: &quot;Ты — система анализа телефонных диалогов компании ООО «Пример Телеком». На вход получаешь транскрипт разговора. Твоя задача — проанализировать первые 7 реплик и сформировать структурированный ответ в одну строку, строго соблюдая правила.\n\nФормат вывода\n&lt;!--Сотрудник:--&gt; [значение], &lt;!--Клиент:--&gt; [значение], &lt;!--Тип клиента:--&gt; [значение], &lt;!--Суть диалога:--&gt; [значение], &lt;!--Проблема:--&gt; [значение][, &lt;!--Упоминание акций:--&gt; [значение]]\n\nПоля и критерии\nСотрудник:\n\nИмя сотрудника, если явно названо (например: \&quot;Юлия из ООО «Пример Телеком»\&quot; → Юлия).\n\nЕсли не указано → -.\n\nКлиент:\n\nИмя клиента, если явно названо (в исходящем звонке имя может быть в приветствии).\n\nЕсли не указано → -.\n\nТип клиента:\n\nдействующий — если упоминается: лицевой счет, действующие услуги, ТП.\n\n- — для новых клиентов.\n\nСуть диалога:\n\nКраткое описание (1-2 предложения): запрос клиента + результат.\n\nПример: \&quot;Клиент запросил тарифы, оператор объяснил условия подключения\&quot;.\n\nПроблема:\n\nКлассификация с указанием отдела в формате: [Описание] ([Отдел]).\n\nОтделы и ключевые слова:\n\nТП (техподдержка): интернет, связь, оборудование, настройка, скорость, роутер, модем, Wi-Fi, кабель, перезагрузка, ошибка подключения, сигнал, ремонт, диагностика, техническая неисправность.\n\nОП (отдел продаж): подключение, тариф, услуга, договор, акция, скидка, новый тариф, продление договора, дополнительные услуги, пакет услуг, специальное предложение, консультация по тарифам, изменение тарифа, условия подключения, абонентская плата.\n\nБухгалтерия: баланс, оплата, начисление, платеж, чек, квитанция, задолженность, счет, переплата, списание.\n\nЕсли отдел не определен → [Описание] (без скобок).\n\nУпоминание акций:\n\nТолько для ОП.\n\nда — если в диалоге есть: акция, скидка, выгодное предложение, бонус, промокод, спецусловия, экономия, льгота, подарок, кэшбэк, бесплатно, спецтариф, акционный период, снижение цены, рассрочка.\n\nнет — для ОП без таких слов.\n\nДля ТП/Бухгалтерии поле исключается.\n\nПравила вывода\nОбязательные поля для ОП:\n\nЕсли отдел — ОП, строка всегда заканчивается полем &lt;!--Упоминание акций:--&gt; [да/нет].\n\nПример: ..., Проблема: Подключение тарифа (ОП), Упоминание акций: нет.\n\nИсключения:\n\nДля ТП/Бухгалтерии поле «Упоминание акций» не выводится.\n\nПример: ..., Проблема: Обрыв интернета (ТП).\n\nСтруктура:\n\nВсе значения разделяются запятыми.\n\nНазвания полей (например, &lt;!--Сотрудник:--&gt;) скрываются в комментариях.\n\nЕсли информация не определена → -.\n\nПримеры\nОП без акций:\nЮлия, Клиент: Сергей, -, Клиент запросил тарифы на номера, оператор предоставил условия, Проблема: Подключение номера (ОП), Упоминание акций: нет\n\nТП:\nАнна, Клиент: Игорь, действующий, Жалоба на отсутствие интернета, Проблема: Обрыв соединения (ТП)\n\nОП с акцией:\nДмитрий, Клиент: Виктор, -, Уточнение условий скидки, Проблема: Выбор тарифа (ОП), Упоминание акций: да\n\nВажно\nАнализировать только первые 7 реплик.\n\nКонтекст решает: если клиент спрашивает о работе тарифа → ТП, о подключении → ОП.\n\nДля ОП поле «Упоминание акций» всегда присутствует.&quot;,
+        &quot;status&quot;: &quot;active&quot;
+      },
+      &quot;conversationId&quot;: 17079645,
+      &quot;instructionId&quot;: 3,
+      &quot;subdialog&quot;: {
+        &quot;keyQuestion&quot;: null,
+        &quot;queueId&quot;: null,
+        &quot;businessProcessId&quot;: null,
+        &quot;data&quot;: {
+          &quot;system&quot;: {},
+          &quot;variable&quot;: {
+            &quot;callId&quot;: &quot;125-1782932380.12198910&quot;,
+            &quot;queueId&quot;: &quot;6616&quot;,
+            &quot;linkedId&quot;: &quot;125-1782932380.12198910&quot;,
+            &quot;answered&quot;: true,
+            &quot;ivrSchemaId&quot;: &quot;6906&quot;,
+            &quot;calledTo&quot;: &quot;79000000001&quot;,
+            &quot;hangupBy&quot;: &quot;operator&quot;,
+            &quot;internalNumber&quot;: &quot;416&quot;,
+            &quot;duration&quot;: 97,
+            &quot;phone&quot;: &quot;79000000002&quot;,
+            &quot;clientUniqueId&quot;: &quot;125-1782932380.12198910&quot;,
+            &quot;operatorUniqueId&quot;: &quot;125-1782932412.12198980&quot;,
+            &quot;calledFrom&quot;: &quot;79000000002&quot;,
+            &quot;transcribation&quot;: &quot;1&quot;,
+            &quot;coreUserId&quot;: &quot;169479&quot;,
+            &quot;callRecordFile&quot;: &quot;20260701-215940-79000000002-79000000001-125178293238012198910&quot;,
+            &quot;queue&quot;: &quot;302&quot;,
+            &quot;uniqueId&quot;: &quot;125-1782932380.12198910&quot;,
+            &quot;vpbxId&quot;: &quot;280&quot;,
+            &quot;direction&quot;: &quot;in&quot;
+          }
+        },
+        &quot;isVoiceAgentEnabled&quot;: false,
+        &quot;displayName&quot;: &quot;79000000002&quot;,
+        &quot;voiceAgentMode&quot;: null,
+        &quot;shortDescription&quot;: null,
+        &quot;dialogId&quot;: 49510173,
+        &quot;isAiAgentEnabled&quot;: false,
+        &quot;tags&quot;: [],
+        &quot;finishedAt&quot;: &quot;2026-07-01T19:01:18.499Z&quot;,
+        &quot;dialog&quot;: {
+          &quot;lastSubdialogId&quot;: 17079645,
+          &quot;data&quot;: {
+            &quot;system&quot;: {},
+            &quot;variable&quot;: {
+              &quot;callId&quot;: &quot;125-1782932380.12198910&quot;,
+              &quot;queueId&quot;: &quot;6616&quot;,
+              &quot;linkedId&quot;: &quot;125-1782932380.12198910&quot;,
+              &quot;answered&quot;: true,
+              &quot;ivrSchemaId&quot;: &quot;6906&quot;,
+              &quot;calledTo&quot;: &quot;79000000001&quot;,
+              &quot;hangupBy&quot;: &quot;operator&quot;,
+              &quot;internalNumber&quot;: &quot;416&quot;,
+              &quot;duration&quot;: 97,
+              &quot;phone&quot;: &quot;79000000002&quot;,
+              &quot;clientUniqueId&quot;: &quot;125-1782932380.12198910&quot;,
+              &quot;operatorUniqueId&quot;: &quot;125-1782932412.12198980&quot;,
+              &quot;calledFrom&quot;: &quot;79000000002&quot;,
+              &quot;transcribation&quot;: &quot;1&quot;,
+              &quot;coreUserId&quot;: &quot;169479&quot;,
+              &quot;callRecordFile&quot;: &quot;20260701-215940-79000000002-79000000001-125178293238012198910&quot;,
+              &quot;queue&quot;: &quot;302&quot;,
+              &quot;uniqueId&quot;: &quot;125-1782932380.12198910&quot;,
+              &quot;vpbxId&quot;: &quot;280&quot;,
+              &quot;direction&quot;: &quot;in&quot;
+            }
+          },
+          &quot;contactId&quot;: 4584288,
+          &quot;connectorId&quot;: &quot;79000000001&quot;,
+          &quot;blockedSince&quot;: null,
+          &quot;externalId&quot;: &quot;125-1782932380.12198910&quot;,
+          &quot;source&quot;: &quot;vpbx&quot;,
+          &quot;createdTs&quot;: &quot;2026-07-01T18:59:40.336Z&quot;,
+          &quot;platform&quot;: &quot;vpbx&quot;,
+          &quot;deleted&quot;: null,
+          &quot;lastReadMessageId&quot;: null,
+          &quot;platformUserId&quot;: &quot;79000000002&quot;,
+          &quot;schemaId&quot;: 6906,
+          &quot;contact&quot;: {
+            &quot;accountId&quot;: 10001,
+            &quot;searchString&quot;: &quot;79000000002&quot;,
+            &quot;data&quot;: {
+              &quot;contactsGroup&quot;: [],
+              &quot;notes&quot;: null,
+              &quot;additionalFields&quot;: [],
+              &quot;createdByUser&quot;: {
+                &quot;name&quot;: &quot;AdminExample&quot;,
+                &quot;email&quot;: &quot;admin@example.com&quot;
+              },
+              &quot;displayName&quot;: null,
+              &quot;numbers&quot;: [
+                &quot;79000000002&quot;
+              ],
+              &quot;calculatedName&quot;: null,
+              &quot;source&quot;: &quot;api_cc&quot;,
+              &quot;clientAccountId&quot;: null,
+              &quot;phoneNumbers&quot;: [
+                {
+                  &quot;accountId&quot;: 10001,
+                  &quot;contactId&quot;: 4584288,
+                  &quot;id&quot;: 9995441,
+                  &quot;tag&quot;: &quot;phone&quot;,
+                  &quot;value&quot;: &quot;79000000002&quot;
+                }
+              ],
+              &quot;emails&quot;: [],
+              &quot;createdAt&quot;: &quot;2026-07-01T18:59:43.160Z&quot;,
+              &quot;isDeleted&quot;: false,
+              &quot;surname&quot;: null,
+              &quot;oldContactId&quot;: null,
+              &quot;socialMedias&quot;: [],
+              &quot;company&quot;: null,
+              &quot;customerIds&quot;: [],
+              &quot;transcriptionName&quot;: null,
+              &quot;id&quot;: 4584288,
+              &quot;customers&quot;: [],
+              &quot;department&quot;: null,
+              &quot;updatedAt&quot;: &quot;2026-07-01T18:59:43.160Z&quot;,
+              &quot;deleteDate&quot;: null,
+              &quot;updatedByUser&quot;: null,
+              &quot;isBlacklist&quot;: false,
+              &quot;updatedBy&quot;: null,
+              &quot;fullName&quot;: &quot;79000000002&quot;,
+              &quot;contactsGroupIds&quot;: [],
+              &quot;groupFields&quot;: [],
+              &quot;userId&quot;: null,
+              &quot;transcriptionSurname&quot;: null,
+              &quot;accountId&quot;: 10001,
+              &quot;createdBy&quot;: 37406,
+              &quot;name&quot;: &quot;79000000002&quot;,
+              &quot;contractId&quot;: null,
+              &quot;position&quot;: null,
+              &quot;isFavorite&quot;: false
+            },
+            &quot;isDeleted&quot;: false,
+            &quot;name&quot;: &quot;79000000002&quot;,
+            &quot;isEmpty&quot;: false,
+            &quot;id&quot;: 4584288
+          },
+          &quot;id&quot;: 49510173,
+          &quot;operatorId&quot;: null
+        },
+        &quot;createdAt&quot;: &quot;2026-07-01T18:59:40.576Z&quot;,
+        &quot;aiAgentMode&quot;: null,
+        &quot;customerId&quot;: null,
+        &quot;numberA&quot;: &quot;79000000002&quot;,
+        &quot;id&quot;: 17079645,
+        &quot;state&quot;: &quot;CLOSED&quot;,
+        &quot;numberB&quot;: &quot;79000000001&quot;,
+        &quot;projectId&quot;: 10,
+        &quot;operatorId&quot;: 169479,
+        &quot;ticketId&quot;: null,
+        &quot;status&quot;: &quot;completed&quot;
+      },
+      &quot;projectId&quot;: 10
+    },
+    &quot;calledTo&quot;: null,
+    &quot;phone&quot;: &quot;79000000002&quot;,
+    &quot;id&quot;: &quot;011d82eb-4bc5-4580-bb64-94f1fa287f9b&quot;,
+    &quot;eventType&quot;: &quot;analyse_completed&quot;,
+    &quot;internalNumber&quot;: null
+  }
+}
+</code></pre>
+</details>

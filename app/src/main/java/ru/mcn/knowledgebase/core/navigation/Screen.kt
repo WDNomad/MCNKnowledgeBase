@@ -8,7 +8,10 @@ sealed class Screen(
         Screen("categories")
 
     data object Articles :
-        Screen("articles/{categoryId}")
+        Screen("articles/{sectionId}/{subsectionId}")
+
+    data object Subsections :
+        Screen("subsections/{sectionId}")
 
     data object Article :
         Screen("article/{articleId}")

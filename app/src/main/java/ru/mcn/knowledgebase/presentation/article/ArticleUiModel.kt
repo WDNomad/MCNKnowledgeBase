@@ -5,5 +5,6 @@ data class ArticleUiModel(
     val content: String,
     val originalUrl: String,
     val updatedAt: String? = null,
-    val images: List<String> = emptyList()
+    val images: List<String> = emptyList(),
+    val breadcrumb: String = ""
 )

@@ -1,0 +1,1945 @@
+<h1 id="телефония"><a aria-hidden="true" tabindex="-1" href="#телефония"><span class="icon icon-link"></span></a>Телефония</h1>
+<p>События (вебхуки и триггеры), связанные с входящими и исходящими звонками, переадресацией и звонками из гостевого региона.</p>
+<p>Единый <code>Envelope</code> используется для всех событий: один <code>channel</code> соответствует одному <code>event_type</code>.</p>
+<h2 id="содержание"><a aria-hidden="true" tabindex="-1" href="#содержание"><span class="icon icon-link"></span></a>Содержание</h2>
+<ul>
+<li><a href="#%D0%B2%D1%85%D0%BE%D0%B4%D1%8F%D1%89%D0%B8%D0%B5-%D0%B7%D0%B2%D0%BE%D0%BD%D0%BA%D0%B8">Входящие звонки</a></li>
+<li><a href="#%D0%B8%D1%81%D1%85%D0%BE%D0%B4%D1%8F%D1%89%D0%B8%D0%B5-%D0%B7%D0%B2%D0%BE%D0%BD%D0%BA%D0%B8">Исходящие звонки</a></li>
+<li><a href="#%D0%BF%D0%B5%D1%80%D0%B5%D0%B0%D0%B4%D1%80%D0%B5%D1%81%D0%B0%D1%86%D0%B8%D1%8F">Переадресация</a></li>
+<li><a href="#%D0%B3%D0%BE%D1%81%D1%82%D0%B5%D0%B2%D0%BE%D0%B9-%D1%80%D0%B5%D0%B3%D0%B8%D0%BE%D0%BD">Гостевой регион</a></li>
+</ul>
+<p>Также см.:<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-virtualnaya-ats-zvonki-vats-pereadresatsiya-i-vnutrennie-nomera--c8d6608a-4125-4ace-9669-8d8351c72a65/"><strong>«Каталог событий MCN Telecom — Виртуальная АТС (Звонки ВАТС, Переадресация и внутренние номера)»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-virtualnaya-ats-ocheredi-drugie-sobytiya-vats--db2b512e-8220-4265-9d11-5201932885c8/"><strong>«Каталог событий MCN Telecom — Виртуальная АТС (Очереди, Другие события ВАТС)»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-rabota-s-rechyu--6cb215de-0ad2-4c83-89c8-5b20db742aa1/"><strong>«Каталог событий MCN Telecom — Работа с речью»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-avtorizatsiya-po-zvonku--b186d668-e72b-4353-9db8-586322a9a608/"><strong>«Каталог событий MCN Telecom — Авторизация по звонку»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-avtozvonki-2-0--f05488ad-7913-4edb-9d21-b69347ec3c5d/"><strong>«Каталог событий MCN Telecom — Автозвонки 2.0»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-adresnaya-kniga--693360fe-3b95-44a7-859e-534bee22318c/"><strong>«Каталог событий MCN Telecom — Адресная книга»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-golosovoy-robot--dd780c4b-0201-4c45-afcd-3328fbe45349/"><strong>«Каталог событий MCN Telecom — Голосовой робот»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-ii-agent--852b3373-bf9f-4be9-813a-f14a1493b0d8/"><strong>«Каталог событий MCN Telecom — ИИ-агент»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-kontakt-tsentr--5d8c9cc8-84fc-4ca5-a0b7-9cc8ab145d18/"><strong>«Каталог событий MCN Telecom — Контакт-центр»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-kolltreking--c0d70ea5-e967-437f-883e-6d740d9e7b85/"><strong>«Каталог событий MCN Telecom — Коллтрекинг»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-rabota-s-rechyu--6cb215de-0ad2-4c83-89c8-5b20db742aa1/"><strong>«Каталог событий MCN Telecom — Работа с речью»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-chat-boty--a181591b-991a-46f2-8421-0692b1327c2b/"><strong>«Каталог событий MCN Telecom — Чат-боты»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-sms--01836f81-a9bc-4fe2-afeb-deda6d30e937/"><strong>«Каталог событий MCN Telecom — SMS»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-sostoyanie-schyota--f9f0fb4b-e84e-4902-ab67-0ac1190f593a"><strong>«Каталог событий MCN Telecom — Состояние счёта»</strong></a></p>
+<h2 id="общий-формат-события"><a aria-hidden="true" tabindex="-1" href="#общий-формат-события"><span class="icon icon-link"></span></a>Общий формат события</h2>
+<p>Все события используют общую обёртку <code>Envelope</code>:</p>
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; одинаков при повторных доставках и используется для дедупликации</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p>Для каждого события приведены описание полей <code>data</code> и пример <code>Payload</code>.</p>
+<h2 id="входящие-звонки"><a aria-hidden="true" tabindex="-1" href="#входящие-звонки"><span class="icon icon-link"></span></a>Входящие звонки</h2>
+<details>
+<summary>InboundCallStart - Начало входящего звонка телефонии</summary>
+<h1 id="начало-входящего-звонка"><a aria-hidden="true" tabindex="-1" href="#начало-входящего-звонка"><span class="icon icon-link"></span></a>Начало входящего звонка</h1>
+<p><strong>Событие:</strong> Начало входящего звонка телефонии<br>
+<strong>Payload:</strong> <code>allOf</code> — общий <code>Envelope</code> + данные события.</p>
+<h2 id="envelope"><a aria-hidden="true" tabindex="-1" href="#envelope"><span class="icon icon-link"></span></a>Envelope</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события — см. <code>components/messages</code></td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; используется для дедупликации повторных доставок</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<h2 id="data"><a aria-hidden="true" tabindex="-1" href="#data"><span class="icon icon-link"></span></a><code>data</code></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>userEventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дублирует <code>event_type</code> — тип события AMI UserEvent</td></tr><tr><td><code>channel</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Имя канала Asterisk (SIP/PJSIP, Local и др.)</td></tr><tr><td><code>privilege</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уровень логирования/видимости события в Asterisk AMI</td></tr><tr><td><code>exten</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Extension диалплана, где сработало событие (для входящих обычно <code>s</code>)</td></tr><tr><td><code>objectType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип объекта (например <code>did</code>)</td></tr><tr><td><code>channelState</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Код состояния Asterisk-канала (см. <code>channelStateDesc</code>)</td></tr><tr><td><code>callerIdNum</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер вызывающего абонента (Caller ID number)</td></tr><tr><td><code>systemName</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID Asterisk-сервера (номер хаба)</td></tr><tr><td><code>dateReceived</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Момент получения события (локальное время сервера)</td></tr><tr><td><code>context</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Контекст события</td></tr><tr><td><code>callerID</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID звонящего (номер телефона)</td></tr><tr><td><code>event</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дублирует <code>event_type</code> — служебное поле Asterisk UserEvent</td></tr><tr><td><code>objectId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID объекта</td></tr><tr><td><code>timestamp</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Время создания события</td></tr><tr><td><code>callId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Идентификатор звонка</td></tr><tr><td><code>linkedId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID связанного звонка</td></tr><tr><td><code>callerNumber</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер звонящего абонента</td></tr><tr><td><code>dateReceivedAtUTC</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Время получения Kafka-коннектором в UTC, до микросекунд; дублирует <code>dateReceived</code></td></tr><tr><td><code>eventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>priority</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Приоритет текущего шага диалплана Asterisk</td></tr><tr><td><code>accountId</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер ЛС</td></tr><tr><td><code>channelStateDesc</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Расшифровка <code>channelState</code> (например <code>Up</code>, <code>Ring</code>, <code>Down</code>)</td></tr><tr><td><code>callerIdName</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Имя вызывающего абонента, если передано АТС/оператором</td></tr><tr><td><code>did</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер телефона</td></tr><tr><td><code>uniqueId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уникальный ID <code>call-leg</code>, формат <code>{systemName}-{timestamp}.{seq}</code></td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p><strong>Пример:</strong> Payload</p>
+<pre><code class="language-json">{
+&quot;account_id&quot;: 10001,
+  &quot;event_type&quot;: &quot;InboundCallStart&quot;,
+  &quot;created_at&quot;: &quot;2026-07-01T20:25:11.177Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;5b133904-6192-49d2-abbc-f95be887fb70&quot;,
+  &quot;data&quot;: {
+    &quot;userEventType&quot;: &quot;InboundCallStart&quot;,
+    &quot;channel&quot;: &quot;SIP/sip-node3-000056be&quot;,
+    &quot;privilege&quot;: &quot;user,all&quot;,
+    &quot;exten&quot;: &quot;s&quot;,
+    &quot;objectType&quot;: &quot;did&quot;,
+    &quot;channelState&quot;: 4,
+    &quot;callerIdNum&quot;: &quot;79000000014&quot;,
+    &quot;systemName&quot;: &quot;207&quot;,
+    &quot;dateReceived&quot;: &quot;Jul 1, 2026, 5:25:11 PM&quot;,
+    &quot;context&quot;: &quot;signal-did-inbound-call&quot;,
+    &quot;callerID&quot;: &quot;79000000014&quot;,
+    &quot;event&quot;: &quot;InboundCallStart&quot;,
+    &quot;objectId&quot;: &quot;559985&quot;,
+    &quot;timestamp&quot;: 1782926711,
+    &quot;callId&quot;: &quot;207-1782926711.179818&quot;,
+    &quot;linkedId&quot;: &quot;207-1782926711.179818&quot;,
+    &quot;callerNumber&quot;: &quot;79000000014&quot;,
+    &quot;dateReceivedAtUTC&quot;: &quot;2026-07-01 17:25:11.044072&quot;,
+    &quot;eventType&quot;: &quot;InboundCallStart&quot;,
+    &quot;priority&quot;: 2,
+    &quot;accountId&quot;: 10001,
+    &quot;channelStateDesc&quot;: &quot;Ring&quot;,
+    &quot;callerIdName&quot;: &quot;79000000014&quot;,
+    &quot;did&quot;: &quot;79000000015&quot;,
+    &quot;uniqueId&quot;: &quot;207-1782926711.179818&quot;
+  }
+}
+</code></pre>
+</details>
+<details>
+<summary>InboundCallEnd - Завершение входящего звонка</summary>
+<h1 id="завершение-входящего-звонка"><a aria-hidden="true" tabindex="-1" href="#завершение-входящего-звонка"><span class="icon icon-link"></span></a>Завершение входящего звонка</h1>
+<p><strong>Событие:</strong> Конец входящего звонка телефонии<br>
+<strong>Payload:</strong> <code>allOf</code> — общий <code>Envelope</code> + данные события.</p>
+<h2 id="envelope-1"><a aria-hidden="true" tabindex="-1" href="#envelope-1"><span class="icon icon-link"></span></a>Envelope</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события — см. <code>components/messages</code></td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; используется для дедупликации повторных доставок</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<h2 id="data-1"><a aria-hidden="true" tabindex="-1" href="#data-1"><span class="icon icon-link"></span></a><code>data</code></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>userEventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дублирует <code>event_type</code> — тип события AMI UserEvent</td></tr><tr><td><code>channel</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Имя канала Asterisk (SIP/PJSIP, Local и др.)</td></tr><tr><td><code>privilege</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уровень логирования/видимости события в Asterisk AMI</td></tr><tr><td><code>exten</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Extension диалплана, где сработало событие (для входящих обычно <code>s</code>)</td></tr><tr><td><code>objectType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип объекта (например <code>did</code>)</td></tr><tr><td><code>channelState</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Код состояния Asterisk-канала (см. <code>channelStateDesc</code>)</td></tr><tr><td><code>callerIdNum</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер вызывающего абонента (Caller ID number)</td></tr><tr><td><code>systemName</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID Asterisk-сервера (номер хаба)</td></tr><tr><td><code>dateReceived</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Момент получения события (локальное время сервера)</td></tr><tr><td><code>context</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Контекст события</td></tr><tr><td><code>callerID</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID звонящего (номер телефона)</td></tr><tr><td><code>event</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дублирует <code>event_type</code> — служебное поле Asterisk UserEvent</td></tr><tr><td><code>objectId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID объекта</td></tr><tr><td><code>timestamp</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Время создания события</td></tr><tr><td><code>callId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Идентификатор звонка</td></tr><tr><td><code>linkedId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID связанного звонка</td></tr><tr><td><code>answered</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Был ли отвечен звонок: <code>0</code> или <code>1</code></td></tr><tr><td><code>callerNumber</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер звонящего</td></tr><tr><td><code>dateReceivedAtUTC</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Время получения Kafka-коннектором в UTC, до микросекунд; дублирует <code>dateReceived</code></td></tr><tr><td><code>eventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>priority</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Приоритет текущего шага диалплана Asterisk</td></tr><tr><td><code>accountId</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер ЛС</td></tr><tr><td><code>channelStateDesc</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Расшифровка <code>channelState</code> (например <code>Up</code>, <code>Ring</code>, <code>Down</code>)</td></tr><tr><td><code>callerIdName</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Имя вызывающего абонента, если передано АТС/оператором</td></tr><tr><td><code>did</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер телефона</td></tr><tr><td><code>uniqueId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уникальный ID <code>call-leg</code>, формат <code>{systemName}-{timestamp}.{seq}</code></td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p><strong>Пример:</strong> Payload</p>
+<pre><code class="language-json">{
+&quot;account_id&quot;: 10001,
+  &quot;event_type&quot;: &quot;InboundCallEnd&quot;,
+  &quot;created_at&quot;: &quot;2026-07-01T20:25:11.241Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;5b133904-6192-49d2-abbc-f95be887fb70&quot;,
+  &quot;data&quot;: {
+    &quot;userEventType&quot;: &quot;InboundCallEnd&quot;,
+    &quot;channel&quot;: &quot;SIP/sip-node3-000056be&quot;,
+    &quot;privilege&quot;: &quot;user,all&quot;,
+    &quot;exten&quot;: &quot;s&quot;,
+    &quot;objectType&quot;: &quot;did&quot;,
+    &quot;channelState&quot;: 4,
+    &quot;callerIdNum&quot;: &quot;79000000014&quot;,
+    &quot;systemName&quot;: &quot;207&quot;,
+    &quot;dateReceived&quot;: &quot;Jul 1, 2026, 5:25:11 PM&quot;,
+    &quot;context&quot;: &quot;hangup-signal-did-inbound-call-finished&quot;,
+    &quot;callerID&quot;: &quot;79000000014&quot;,
+    &quot;event&quot;: &quot;InboundCallEnd&quot;,
+    &quot;objectId&quot;: &quot;559985&quot;,
+    &quot;timestamp&quot;: 1782926711,
+    &quot;callId&quot;: &quot;207-1782926711.179818&quot;,
+    &quot;linkedId&quot;: &quot;207-1782926711.179818&quot;,
+    &quot;answered&quot;: &quot;0&quot;,
+    &quot;callerNumber&quot;: &quot;79000000014&quot;,
+    &quot;dateReceivedAtUTC&quot;: &quot;2026-07-01 17:25:11.061776&quot;,
+    &quot;eventType&quot;: &quot;InboundCallEnd&quot;,
+    &quot;priority&quot;: 3,
+    &quot;accountId&quot;: 10001,
+    &quot;channelStateDesc&quot;: &quot;Ring&quot;,
+    &quot;callerIdName&quot;: &quot;79000000014&quot;,
+    &quot;did&quot;: &quot;79000000015&quot;,
+    &quot;uniqueId&quot;: &quot;207-1782926711.179818&quot;
+  }
+}
+</code></pre>
+</details>
+<h2 id="исходящие-звонки"><a aria-hidden="true" tabindex="-1" href="#исходящие-звонки"><span class="icon icon-link"></span></a>Исходящие звонки</h2>
+<details>
+<summary>OutgoingStart - Начало исходящего звонка</summary>
+<p><strong>Событие:</strong> Начало звонка<br>
+<strong>Payload:</strong> <code>allOf</code> — общий <code>Envelope</code> + данные события.</p>
+<h2 id="envelope-2"><a aria-hidden="true" tabindex="-1" href="#envelope-2"><span class="icon icon-link"></span></a>Envelope</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события — см. <code>components/messages</code></td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; используется для дедупликации повторных доставок</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<h2 id="data-2"><a aria-hidden="true" tabindex="-1" href="#data-2"><span class="icon icon-link"></span></a><code>data</code></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>callId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Идентификатор звонка</td></tr><tr><td><code>linkedId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID связанного звонка</td></tr><tr><td><code>callerNumber</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер звонящего абонента</td></tr><tr><td><code>connectedLineNum</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер собеседника (<code>Connected Line</code>); может содержать доп. параметры через <code>*</code></td></tr><tr><td><code>userEventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дублирует <code>event_type</code> — тип события AMI UserEvent</td></tr><tr><td><code>connectedLineName</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Имя/номер собеседника в Connected Line (см. <code>connectedLineNum</code>)</td></tr><tr><td><code>dateReceivedAtUTC</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Время получения Kafka-коннектором в UTC, до микросекунд; дублирует <code>dateReceived</code></td></tr><tr><td><code>channel</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Имя канала Asterisk (SIP/PJSIP, Local и др.)</td></tr><tr><td><code>privilege</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уровень логирования/видимости события в Asterisk AMI</td></tr><tr><td><code>eventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>priority</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Приоритет текущего шага диалплана Asterisk</td></tr><tr><td><code>exten</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Extension диалплана, где сработало событие (для входящих обычно <code>s</code>)</td></tr><tr><td><code>channelState</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Код состояния Asterisk-канала (см. <code>channelStateDesc</code>)</td></tr><tr><td><code>accountId</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер ЛС</td></tr><tr><td><code>callerIdNum</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер вызывающего абонента (Caller ID number)</td></tr><tr><td><code>systemName</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID Asterisk-сервера (номер хаба)</td></tr><tr><td><code>dateReceived</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Момент получения события (локальное время сервера)</td></tr><tr><td><code>context</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Контекст события</td></tr><tr><td><code>channelStateDesc</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Расшифровка <code>channelState</code> (например <code>Up</code>, <code>Ring</code>, <code>Down</code>)</td></tr><tr><td><code>event</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дублирует <code>event_type</code> — служебное поле Asterisk UserEvent</td></tr><tr><td><code>calledNumber</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Кто звонит</td></tr><tr><td><code>did</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер телефона</td></tr><tr><td><code>uniqueId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уникальный ID <code>call-leg</code>, формат <code>{systemName}-{timestamp}.{seq}</code></td></tr><tr><td><code>timestamp</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Время создания события</td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p><strong>Пример:</strong> Payload</p>
+<pre><code class="language-json">{
+&quot;account_id&quot;: 10001,
+  &quot;event_type&quot;: &quot;OutgoingStart&quot;,
+  &quot;created_at&quot;: &quot;2026-07-01T13:15:49.141Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;5b133904-6192-49d2-abbc-f95be887fb70&quot;,
+  &quot;data&quot;: {
+    &quot;callId&quot;: &quot;206-1782900948.347401&quot;,
+    &quot;linkedId&quot;: &quot;206-1782900948.347401&quot;,
+    &quot;callerNumber&quot;: null,
+    &quot;connectedLineNum&quot;: &quot;79000000021&quot;,
+    &quot;userEventType&quot;: &quot;OutgoingStart&quot;,
+    &quot;connectedLineName&quot;: &quot;79000000021&quot;,
+    &quot;dateReceivedAtUTC&quot;: &quot;2026-07-01 10:15:48.989278&quot;,
+    &quot;channel&quot;: &quot;SIP/sip-node1-00009a8f&quot;,
+    &quot;privilege&quot;: &quot;user,all&quot;,
+    &quot;eventType&quot;: &quot;OutgoingStart&quot;,
+    &quot;priority&quot;: 11,
+    &quot;exten&quot;: &quot;s&quot;,
+    &quot;channelState&quot;: 0,
+    &quot;accountId&quot;: 10001,
+    &quot;callerIdNum&quot;: &quot;s&quot;,
+    &quot;systemName&quot;: &quot;206&quot;,
+    &quot;dateReceived&quot;: &quot;Jul 1, 2026, 10:15:48 AM&quot;,
+    &quot;context&quot;: &quot;signal-outgoing-call&quot;,
+    &quot;channelStateDesc&quot;: &quot;Down&quot;,
+    &quot;event&quot;: &quot;OutgoingStart&quot;,
+    &quot;calledNumber&quot;: &quot;79000000022&quot;,
+    &quot;did&quot;: &quot;79000000021&quot;,
+    &quot;uniqueId&quot;: &quot;206-1782900948.347404&quot;,
+    &quot;timestamp&quot;: 1782900948
+  }
+}
+</code></pre>
+</details>
+<details>
+<summary>OutgoingAnswer - Исходящий звонок отвечен  </summary>
+<p><strong>Событие:</strong> Ответ на исходящий звонок телефонии<br>
+<strong>Payload:</strong> <code>allOf</code> — общий <code>Envelope</code> + данные события.</p>
+<h2 id="envelope-3"><a aria-hidden="true" tabindex="-1" href="#envelope-3"><span class="icon icon-link"></span></a>Envelope</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события — см. <code>components/messages</code></td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; используется для дедупликации повторных доставок</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<h2 id="data-3"><a aria-hidden="true" tabindex="-1" href="#data-3"><span class="icon icon-link"></span></a><code>data</code></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>connectedLineNum</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер собеседника (<code>Connected Line</code>); может содержать доп. параметры через <code>*</code></td></tr><tr><td><code>userEventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дублирует <code>event_type</code> — тип события AMI UserEvent</td></tr><tr><td><code>channel</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Имя канала Asterisk (SIP/PJSIP, Local и др.)</td></tr><tr><td><code>privilege</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уровень логирования/видимости события в Asterisk AMI</td></tr><tr><td><code>exten</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Extension диалплана, где сработало событие (для входящих обычно <code>s</code>)</td></tr><tr><td><code>channelState</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Код состояния Asterisk-канала (см. <code>channelStateDesc</code>)</td></tr><tr><td><code>callerIdNum</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер вызывающего абонента (Caller ID number)</td></tr><tr><td><code>systemName</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID Asterisk-сервера (номер хаба)</td></tr><tr><td><code>dateReceived</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Момент получения события (локальное время сервера)</td></tr><tr><td><code>record</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Наличие записи разговора: <code>1</code> — есть, <code>0</code> — нет</td></tr><tr><td><code>context</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Контекст события</td></tr><tr><td><code>event</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дублирует <code>event_type</code> — служебное поле Asterisk UserEvent</td></tr><tr><td><code>calledNumber</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Кто звонит</td></tr><tr><td><code>timestamp</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Время создания события</td></tr><tr><td><code>callId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Идентификатор звонка</td></tr><tr><td><code>linkedId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID связанного звонка</td></tr><tr><td><code>callerNumber</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер звонящего абонента</td></tr><tr><td><code>connectedLineName</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Имя/номер собеседника в Connected Line (см. <code>connectedLineNum</code>)</td></tr><tr><td><code>dateReceivedAtUTC</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Время получения Kafka-коннектором в UTC, до микросекунд; дублирует <code>dateReceived</code></td></tr><tr><td><code>eventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>priority</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Приоритет текущего шага диалплана Asterisk</td></tr><tr><td><code>accountId</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер ЛС</td></tr><tr><td><code>channelStateDesc</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Расшифровка <code>channelState</code> (например <code>Up</code>, <code>Ring</code>, <code>Down</code>)</td></tr><tr><td><code>did</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер телефона</td></tr><tr><td><code>uniqueId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уникальный ID <code>call-leg</code>, формат <code>{systemName}-{timestamp}.{seq}</code></td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p><strong>Пример:</strong> Payload</p>
+<pre><code class="language-json">{
+&quot;account_id&quot;: 10001,
+  &quot;event_type&quot;: &quot;OutgoingAnswer&quot;,
+  &quot;created_at&quot;: &quot;2026-06-30T10:27:25.556Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;5b133904-6192-49d2-abbc-f95be887fb70&quot;,
+  &quot;data&quot;: {
+    &quot;connectedLineNum&quot;: &quot;79000000019&quot;,
+    &quot;userEventType&quot;: &quot;OutgoingAnswer&quot;,
+    &quot;channel&quot;: &quot;SIP/sip-node1-00375e92&quot;,
+    &quot;privilege&quot;: &quot;user,all&quot;,
+    &quot;exten&quot;: &quot;s&quot;,
+    &quot;channelState&quot;: 6,
+    &quot;callerIdNum&quot;: &quot;79000000020&quot;,
+    &quot;systemName&quot;: &quot;122&quot;,
+    &quot;dateReceived&quot;: &quot;Jun 30, 2026, 10:27:25 AM&quot;,
+    &quot;record&quot;: &quot;0&quot;,
+    &quot;context&quot;: &quot;signal-outgoing-bridge&quot;,
+    &quot;event&quot;: &quot;OutgoingAnswer&quot;,
+    &quot;calledNumber&quot;: &quot;79000000020&quot;,
+    &quot;timestamp&quot;: 1782804445,
+    &quot;callId&quot;: &quot;122-1782804436.45988052&quot;,
+    &quot;linkedId&quot;: &quot;122-1782804436.45988052&quot;,
+    &quot;callerNumber&quot;: null,
+    &quot;connectedLineName&quot;: &quot;79000000019&quot;,
+    &quot;dateReceivedAtUTC&quot;: &quot;2026-06-30 07:27:25.333723&quot;,
+    &quot;eventType&quot;: &quot;OutgoingAnswer&quot;,
+    &quot;priority&quot;: 28,
+    &quot;accountId&quot;: 10001,
+    &quot;channelStateDesc&quot;: &quot;Up&quot;,
+    &quot;did&quot;: &quot;79000000019&quot;,
+    &quot;uniqueId&quot;: &quot;122-1782804436.45988055&quot;
+  }
+}
+</code></pre>
+</details>
+<details>
+<summary>OutgoingEnd - Завершение исходящего звонка телефонии</summary>
+<p><strong>Событие:</strong> Завершение звонка телефонии<br>
+<strong>Payload:</strong> <code>allOf</code> — общий <code>Envelope</code> + данные события.</p>
+<h2 id="envelope-4"><a aria-hidden="true" tabindex="-1" href="#envelope-4"><span class="icon icon-link"></span></a>Envelope</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события — см. <code>components/messages</code></td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; используется для дедупликации повторных доставок</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<h2 id="data-4"><a aria-hidden="true" tabindex="-1" href="#data-4"><span class="icon icon-link"></span></a><code>data</code></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>connectedLineNum</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер собеседника (<code>Connected Line</code>); может содержать доп. параметры через <code>*</code></td></tr><tr><td><code>userEventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дублирует <code>event_type</code> — тип события AMI UserEvent</td></tr><tr><td><code>channel</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Имя канала Asterisk (SIP/PJSIP, Local и др.)</td></tr><tr><td><code>privilege</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уровень логирования/видимости события в Asterisk AMI</td></tr><tr><td><code>exten</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Extension диалплана, где сработало событие (для входящих обычно <code>s</code>)</td></tr><tr><td><code>channelState</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Код состояния Asterisk-канала (см. <code>channelStateDesc</code>)</td></tr><tr><td><code>hangupCauseCode</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Код завершения звонка</td></tr><tr><td><code>callerIdNum</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер вызывающего абонента (Caller ID number)</td></tr><tr><td><code>systemName</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID Asterisk-сервера (номер хаба)</td></tr><tr><td><code>dateReceived</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Момент получения события (локальное время сервера)</td></tr><tr><td><code>record</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Наличие записи: <code>1</code> — есть, <code>0</code> — нет</td></tr><tr><td><code>context</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Контекст события</td></tr><tr><td><code>event</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дублирует <code>event_type</code> — служебное поле Asterisk UserEvent</td></tr><tr><td><code>calledNumber</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Кто звонит</td></tr><tr><td><code>timestamp</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Время создания события</td></tr><tr><td><code>callId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Идентификатор звонка</td></tr><tr><td><code>linkedId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID связанного звонка</td></tr><tr><td><code>answered</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Был ли отвечен звонок: <code>0</code> или <code>1</code></td></tr><tr><td><code>callerNumber</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер звонящего абонента</td></tr><tr><td><code>connectedLineName</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Имя/номер собеседника в Connected Line (см. <code>connectedLineNum</code>)</td></tr><tr><td><code>dateReceivedAtUTC</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Время получения Kafka-коннектором в UTC, до микросекунд; дублирует <code>dateReceived</code></td></tr><tr><td><code>eventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>priority</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Приоритет текущего шага диалплана Asterisk</td></tr><tr><td><code>accountId</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер ЛС</td></tr><tr><td><code>channelStateDesc</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Расшифровка <code>channelState</code> (например <code>Up</code>, <code>Ring</code>, <code>Down</code>)</td></tr><tr><td><code>did</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер телефона</td></tr><tr><td><code>uniqueId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уникальный ID <code>call-leg</code>, формат <code>{systemName}-{timestamp}.{seq}</code></td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p><strong>Пример:</strong> Payload</p>
+<pre><code class="language-json">{
+&quot;account_id&quot;: 10001,
+  &quot;event_type&quot;: &quot;OutgoingEnd&quot;,
+  &quot;created_at&quot;: &quot;2026-07-01T13:15:55.304Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;5b133904-6192-49d2-abbc-f95be887fb70&quot;,
+  &quot;data&quot;: {
+    &quot;connectedLineNum&quot;: &quot;79000000021&quot;,
+    &quot;userEventType&quot;: &quot;OutgoingEnd&quot;,
+    &quot;channel&quot;: &quot;SIP/sip-node1-00009a8f&quot;,
+    &quot;privilege&quot;: &quot;user,all&quot;,
+    &quot;exten&quot;: &quot;s&quot;,
+    &quot;channelState&quot;: 0,
+    &quot;hangupCauseCode&quot;: &quot;21&quot;,
+    &quot;callerIdNum&quot;: &quot;79000000022&quot;,
+    &quot;systemName&quot;: &quot;206&quot;,
+    &quot;dateReceived&quot;: &quot;Jul 1, 2026, 10:15:55 AM&quot;,
+    &quot;record&quot;: &quot;0&quot;,
+    &quot;context&quot;: &quot;signal-outgoing-hangup-handler&quot;,
+    &quot;event&quot;: &quot;OutgoingEnd&quot;,
+    &quot;calledNumber&quot;: &quot;79000000022&quot;,
+    &quot;timestamp&quot;: 1782900955,
+    &quot;callId&quot;: &quot;206-1782900948.347401&quot;,
+    &quot;linkedId&quot;: &quot;206-1782900948.347401&quot;,
+    &quot;answered&quot;: &quot;0&quot;,
+    &quot;callerNumber&quot;: null,
+    &quot;connectedLineName&quot;: &quot;79000000021&quot;,
+    &quot;dateReceivedAtUTC&quot;: &quot;2026-07-01 10:15:55.150667&quot;,
+    &quot;eventType&quot;: &quot;OutgoingEnd&quot;,
+    &quot;priority&quot;: 18,
+    &quot;accountId&quot;: 10001,
+    &quot;channelStateDesc&quot;: &quot;Down&quot;,
+    &quot;did&quot;: &quot;79000000021&quot;,
+    &quot;uniqueId&quot;: &quot;206-1782900948.347404&quot;
+  }
+}
+</code></pre>
+</details>
+<h2 id="переадресация"><a aria-hidden="true" tabindex="-1" href="#переадресация"><span class="icon icon-link"></span></a>Переадресация</h2>
+<details>
+<summary>DIDFwCallStart - Начало переадресованного звонка в телефонии</summary>
+<p><strong>Событие:</strong> Начало переадресованного звонка в телефонии<br>
+<strong>Payload:</strong> <code>allOf</code> — общий <code>Envelope</code> + данные события.</p>
+<h2 id="envelope-5"><a aria-hidden="true" tabindex="-1" href="#envelope-5"><span class="icon icon-link"></span></a>Envelope</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события — см. <code>components/messages</code></td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; используется для дедупликации повторных доставок</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<h2 id="data-5"><a aria-hidden="true" tabindex="-1" href="#data-5"><span class="icon icon-link"></span></a><code>data</code></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>connectedLineNum</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер собеседника (<code>Connected Line</code>); может содержать доп. параметры через <code>*</code></td></tr><tr><td><code>userEventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дублирует <code>event_type</code> — тип события AMI UserEvent</td></tr><tr><td><code>channel</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Имя канала Asterisk (SIP/PJSIP, Local и др.)</td></tr><tr><td><code>privilege</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уровень логирования/видимости события в Asterisk AMI</td></tr><tr><td><code>dest</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер/направление, куда звонили</td></tr><tr><td><code>exten</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Extension диалплана, где сработало событие (для входящих обычно <code>s</code>)</td></tr><tr><td><code>channelState</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Код состояния Asterisk-канала (см. <code>channelStateDesc</code>)</td></tr><tr><td><code>callerIdNum</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер вызывающего абонента (Caller ID number)</td></tr><tr><td><code>systemName</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID Asterisk-сервера (номер хаба)</td></tr><tr><td><code>dateReceived</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Момент получения события (локальное время сервера)</td></tr><tr><td><code>context</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Контекст события</td></tr><tr><td><code>callerID</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID звонящего (номер телефона)</td></tr><tr><td><code>event</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дублирует <code>event_type</code> — служебное поле Asterisk UserEvent</td></tr><tr><td><code>timestamp</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Время создания события</td></tr><tr><td><code>callId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Идентификатор звонка</td></tr><tr><td><code>linkedId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID связанного звонка</td></tr><tr><td><code>callerNumber</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер звонящего абонента</td></tr><tr><td><code>connectedLineName</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Имя/номер собеседника в Connected Line (см. <code>connectedLineNum</code>)</td></tr><tr><td><code>dateReceivedAtUTC</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Время получения Kafka-коннектором в UTC, до микросекунд; дублирует <code>dateReceived</code></td></tr><tr><td><code>eventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>priority</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Приоритет текущего шага диалплана Asterisk</td></tr><tr><td><code>accountId</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер ЛС</td></tr><tr><td><code>channelStateDesc</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Расшифровка <code>channelState</code> (например <code>Up</code>, <code>Ring</code>, <code>Down</code>)</td></tr><tr><td><code>did</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер телефона</td></tr><tr><td><code>uniqueId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уникальный ID <code>call-leg</code>, формат <code>{systemName}-{timestamp}.{seq}</code></td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p><strong>Пример:</strong> Payload</p>
+<pre><code class="language-json">{
+ &quot;account_id&quot;: 10001,
+  &quot;event_type&quot;: &quot;DIDFwCallStart&quot;,
+  &quot;created_at&quot;: &quot;2026-06-30T11:49:02.572Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;5b133904-6192-49d2-abbc-f95be887fb70&quot;,
+  &quot;data&quot;: {
+    &quot;connectedLineNum&quot;: &quot;79000000005&quot;,
+    &quot;userEventType&quot;: &quot;DIDFwCallStart&quot;,
+    &quot;channel&quot;: &quot;SIP/sip-node1-000cff48&quot;,
+    &quot;privilege&quot;: &quot;user,all&quot;,
+    &quot;dest&quot;: &quot;79000000006&quot;,
+    &quot;exten&quot;: &quot;s&quot;,
+    &quot;channelState&quot;: 0,
+    &quot;callerIdNum&quot;: &quot;s&quot;,
+    &quot;systemName&quot;: &quot;123&quot;,
+    &quot;dateReceived&quot;: &quot;Jun 30, 2026, 11:49:02 AM&quot;,
+    &quot;context&quot;: &quot;did-signal-fw-call&quot;,
+    &quot;callerID&quot;: &quot;79000000005&quot;,
+    &quot;event&quot;: &quot;DIDFwCallStart&quot;,
+    &quot;timestamp&quot;: 1782809342,
+    &quot;callId&quot;: &quot;123-1782809342.9422691&quot;,
+    &quot;linkedId&quot;: &quot;123-1782809342.9422691&quot;,
+    &quot;callerNumber&quot;: &quot;79000000005&quot;,
+    &quot;connectedLineName&quot;: &quot;79000000005&quot;,
+    &quot;dateReceivedAtUTC&quot;: &quot;2026-06-30 08:49:02.357062&quot;,
+    &quot;eventType&quot;: &quot;DIDFwCallStart&quot;,
+    &quot;priority&quot;: 3,
+    &quot;accountId&quot;: 10001,
+    &quot;channelStateDesc&quot;: &quot;Down&quot;,
+    &quot;did&quot;: &quot;79000000007&quot;,
+    &quot;uniqueId&quot;: &quot;123-1782809342.9422694&quot;
+  }
+}
+</code></pre>
+</details>
+<details>
+<summary>DIDFwCallEnd - Завершение переадресованного звонка в телефонии</summary>
+<p><strong>Событие:</strong> Завершение переадресованного звонка в телефонии<br>
+<strong>Payload:</strong> <code>allOf</code> — общий <code>Envelope</code> + данные события.</p>
+<h2 id="envelope-6"><a aria-hidden="true" tabindex="-1" href="#envelope-6"><span class="icon icon-link"></span></a>Envelope</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события — см. <code>components/messages</code></td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; используется для дедупликации повторных доставок</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<h2 id="data-6"><a aria-hidden="true" tabindex="-1" href="#data-6"><span class="icon icon-link"></span></a><code>data</code></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>connectedLineNum</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер собеседника (<code>Connected Line</code>); может содержать доп. параметры через <code>*</code></td></tr><tr><td><code>userEventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дублирует <code>event_type</code> — тип события AMI UserEvent</td></tr><tr><td><code>channel</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Имя канала Asterisk (SIP/PJSIP, Local и др.)</td></tr><tr><td><code>privilege</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уровень логирования/видимости события в Asterisk AMI</td></tr><tr><td><code>dest</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер/направление, куда звонили</td></tr><tr><td><code>exten</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Extension диалплана, где сработало событие (для входящих обычно <code>s</code>)</td></tr><tr><td><code>channelState</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Код состояния Asterisk-канала (см. <code>channelStateDesc</code>)</td></tr><tr><td><code>callerIdNum</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер вызывающего абонента (Caller ID number)</td></tr><tr><td><code>systemName</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID Asterisk-сервера (номер хаба)</td></tr><tr><td><code>dateReceived</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Момент получения события (локальное время сервера)</td></tr><tr><td><code>context</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Контекст события</td></tr><tr><td><code>callerID</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID звонящего (номер телефона)</td></tr><tr><td><code>event</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дублирует <code>event_type</code> — служебное поле Asterisk UserEvent</td></tr><tr><td><code>timestamp</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Время создания события</td></tr><tr><td><code>callId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Идентификатор звонка</td></tr><tr><td><code>linkedId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID связанного звонка</td></tr><tr><td><code>answered</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Был ли отвечен звонок: <code>0</code> или <code>1</code></td></tr><tr><td><code>callerNumber</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер звонящего абонента</td></tr><tr><td><code>connectedLineName</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Имя/номер собеседника в Connected Line (см. <code>connectedLineNum</code>)</td></tr><tr><td><code>dateReceivedAtUTC</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Время получения Kafka-коннектором в UTC, до микросекунд; дублирует <code>dateReceived</code></td></tr><tr><td><code>eventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>priority</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Приоритет текущего шага диалплана Asterisk</td></tr><tr><td><code>accountId</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер ЛС</td></tr><tr><td><code>channelStateDesc</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Расшифровка <code>channelState</code> (например <code>Up</code>, <code>Ring</code>, <code>Down</code>)</td></tr><tr><td><code>did</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер телефона</td></tr><tr><td><code>uniqueId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уникальный ID <code>call-leg</code>, формат <code>{systemName}-{timestamp}.{seq}</code></td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p><strong>Пример:</strong> Payload</p>
+<pre><code class="language-json">{
+&quot;account_id&quot;: 10001,
+  &quot;event_type&quot;: &quot;DIDFwCallEnd&quot;,
+  &quot;created_at&quot;: &quot;2026-06-30T11:49:03.784Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;5b133904-6192-49d2-abbc-f95be887fb70&quot;,
+  &quot;data&quot;: {
+    &quot;connectedLineNum&quot;: &quot;79000000005&quot;,
+    &quot;userEventType&quot;: &quot;DIDFwCallEnd&quot;,
+    &quot;channel&quot;: &quot;SIP/sip-node1-000cff48&quot;,
+    &quot;privilege&quot;: &quot;user,all&quot;,
+    &quot;dest&quot;: &quot;79000000006&quot;,
+    &quot;exten&quot;: &quot;s&quot;,
+    &quot;channelState&quot;: 5,
+    &quot;callerIdNum&quot;: &quot;s&quot;,
+    &quot;systemName&quot;: &quot;123&quot;,
+    &quot;dateReceived&quot;: &quot;Jun 30, 2026, 11:49:03 AM&quot;,
+    &quot;context&quot;: &quot;did-signal-fw-call-hangup-handler&quot;,
+    &quot;callerID&quot;: &quot;79000000005&quot;,
+    &quot;event&quot;: &quot;DIDFwCallEnd&quot;,
+    &quot;timestamp&quot;: 1782809343,
+    &quot;callId&quot;: &quot;123-1782809342.9422691&quot;,
+    &quot;linkedId&quot;: &quot;123-1782809342.9422691&quot;,
+    &quot;answered&quot;: &quot;0&quot;,
+    &quot;callerNumber&quot;: &quot;79000000005&quot;,
+    &quot;connectedLineName&quot;: &quot;79000000005&quot;,
+    &quot;dateReceivedAtUTC&quot;: &quot;2026-06-30 08:49:03.534590&quot;,
+    &quot;eventType&quot;: &quot;DIDFwCallEnd&quot;,
+    &quot;priority&quot;: 4,
+    &quot;accountId&quot;: 10001,
+    &quot;channelStateDesc&quot;: &quot;Ringing&quot;,
+    &quot;did&quot;: &quot;79000000007&quot;,
+    &quot;uniqueId&quot;: &quot;123-1782809342.9422694&quot;
+  }
+}
+</code></pre>
+</details>
+<h2 id="гостевой-регион"><a aria-hidden="true" tabindex="-1" href="#гостевой-регион"><span class="icon icon-link"></span></a>Гостевой регион</h2>
+<details>
+<summary>GuestRegionCall - Звонок из гостевого региона</summary>
+<p><strong>Событие:</strong> Звонок гостевого региона<br>
+<strong>Payload:</strong> <code>allOf</code> — общий <code>Envelope</code> + данные события.</p>
+<h2 id="envelope-7"><a aria-hidden="true" tabindex="-1" href="#envelope-7"><span class="icon icon-link"></span></a>Envelope</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события — см. <code>components/messages</code></td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; используется для дедупликации повторных доставок</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<h2 id="data-7"><a aria-hidden="true" tabindex="-1" href="#data-7"><span class="icon icon-link"></span></a><code>data</code></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>eventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>accountId</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер ЛС</td></tr><tr><td><code>after</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Информация о событии</td></tr><tr><td><code>ts_ms</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Время создания события в миллисекундах</td></tr><tr><td><code>callId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Идентификатор звонка</td></tr><tr><td><code>numA</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер A</td></tr><tr><td><code>numB</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер B</td></tr><tr><td><code>dst_number</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер оператора</td></tr><tr><td><code>src_number</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер абонента</td></tr><tr><td><code>connect_time</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Время соединения</td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p><strong>Пример:</strong> Payload</p>
+<pre><code class="language-json">{
+&quot;account_id&quot;: 0,
+  &quot;event_type&quot;: &quot;string&quot;,
+  &quot;created_at&quot;: &quot;2019-08-24T14:15:22Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;0c14c6a6-6f50-4d1e-b0c4-b46ff43ba6a1&quot;,
+  &quot;data&quot;: {
+    &quot;eventType&quot;: &quot;string&quot;,
+    &quot;accountId&quot;: 0,
+    &quot;after&quot;: &quot;string&quot;,
+    &quot;ts_ms&quot;: 0,
+    &quot;callId&quot;: &quot;string&quot;,
+    &quot;numA&quot;: &quot;string&quot;,
+    &quot;numB&quot;: &quot;string&quot;,
+    &quot;dst_number&quot;: &quot;string&quot;,
+    &quot;src_number&quot;: &quot;string&quot;,
+  }
+}
+</code></pre>
+</details>

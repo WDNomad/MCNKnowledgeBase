@@ -1,0 +1,467 @@
+<h1 id="sms"><a aria-hidden="true" tabindex="-1" href="#sms"><span class="icon icon-link"></span></a>SMS</h1>
+<p>События (вебхуки и триггеры), связанные с отправкой и получением SMS-сообщений и их тарификацией.</p>
+<p>Единый <code>Envelope</code> используется для всех событий: один <code>channel</code> соответствует одному <code>event_type</code>.</p>
+<h2 id="содержание"><a aria-hidden="true" tabindex="-1" href="#содержание"><span class="icon icon-link"></span></a>Содержание</h2>
+<ul>
+<li><a href="#sms-%D1%81%D0%BE%D0%BE%D0%B1%D1%89%D0%B5%D0%BD%D0%B8%D1%8F">SMS-сообщения</a></li>
+<li><a href="#%D0%B1%D0%B8%D0%BB%D0%BB%D0%B8%D0%BD%D0%B3-sms">Биллинг SMS</a></li>
+</ul>
+<p>Также см.:<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-virtualnaya-ats-zvonki-vats-pereadresatsiya-i-vnutrennie-nomera--c8d6608a-4125-4ace-9669-8d8351c72a65/"><strong>«Каталог событий MCN Telecom — Виртуальная АТС (Звонки ВАТС, Переадресация и внутренние номера)»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-virtualnaya-ats-ocheredi-drugie-sobytiya-vats--db2b512e-8220-4265-9d11-5201932885c8/"><strong>«Каталог событий MCN Telecom — Виртуальная АТС (Очереди, Другие события ВАТС)»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-rabota-s-rechyu--6cb215de-0ad2-4c83-89c8-5b20db742aa1/"><strong>«Каталог событий MCN Telecom — Работа с речью»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-avtorizatsiya-po-zvonku--b186d668-e72b-4353-9db8-586322a9a608/"><strong>«Каталог событий MCN Telecom — Авторизация по звонку»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-avtozvonki-2-0--f05488ad-7913-4edb-9d21-b69347ec3c5d/"><strong>«Каталог событий MCN Telecom — Автозвонки 2.0»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-adresnaya-kniga--693360fe-3b95-44a7-859e-534bee22318c/"><strong>«Каталог событий MCN Telecom — Адресная книга»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-golosovoy-robot--dd780c4b-0201-4c45-afcd-3328fbe45349/"><strong>«Каталог событий MCN Telecom — Голосовой робот»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-ii-agent--852b3373-bf9f-4be9-813a-f14a1493b0d8/"><strong>«Каталог событий MCN Telecom — ИИ-агент»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-kontakt-tsentr--5d8c9cc8-84fc-4ca5-a0b7-9cc8ab145d18/"><strong>«Каталог событий MCN Telecom — Контакт-центр»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-kolltreking--c0d70ea5-e967-437f-883e-6d740d9e7b85/"><strong>«Каталог событий MCN Telecom — Коллтрекинг»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-rabota-s-rechyu--6cb215de-0ad2-4c83-89c8-5b20db742aa1/"><strong>«Каталог событий MCN Telecom — Работа с речью»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-telefoniya--848aaaa0-012a-4018-9a30-885ed57ed74f/"><strong>«Каталог событий MCN Telecom — Телефония»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-chat-boty--a181591b-991a-46f2-8421-0692b1327c2b/"><strong>«Каталог событий MCN Telecom — Чат-боты»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-sostoyanie-schyota--f9f0fb4b-e84e-4902-ab67-0ac1190f593a"><strong>«Каталог событий MCN Telecom — Состояние счёта»</strong></a></p>
+<h2 id="общий-формат-события"><a aria-hidden="true" tabindex="-1" href="#общий-формат-события"><span class="icon icon-link"></span></a>Общий формат события</h2>
+<p>Все события используют общую обёртку <code>Envelope</code>:</p>
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; одинаков при повторных доставках и используется для дедупликации</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p>Для каждого события приведены описание полей <code>data</code> и пример <code>Payload</code>.</p>
+<h2 id="sms-сообщения"><a aria-hidden="true" tabindex="-1" href="#sms-сообщения"><span class="icon icon-link"></span></a>SMS-сообщения</h2>
+<details>
+<summary>Sms_event - Входящее/исходящее СМС</summary>
+<p><strong>Описание:</strong> Событие о входящем/исходящем СМС<br>
+<strong>Payload:</strong> <code>allOf</code> — общий <code>Envelope</code> + данные события.</p>
+<h2 id="envelope"><a aria-hidden="true" tabindex="-1" href="#envelope"><span class="icon icon-link"></span></a>Envelope</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события — см. <code>components/messages</code></td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; используется для дедупликации повторных доставок</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<h2 id="data"><a aria-hidden="true" tabindex="-1" href="#data"><span class="icon icon-link"></span></a><code>data</code></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>date</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Метка времени отправки сообщения</td></tr><tr><td><code>client_account_id</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер лицевого счёта клиента</td></tr><tr><td><code>message_coding</code></td><td><code>null</code></td><td style="text-align:center">✓</td><td>Кодировка SMS-сообщения</td></tr><tr><td><code>eventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>message</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Текст сообщения</td></tr><tr><td><code>type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип SMS: <code>p2p</code> — между абонентами, <code>a2p</code> — от приложения абоненту</td></tr><tr><td><code>src_number</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер отправителя (номер A)</td></tr><tr><td><code>accountId</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер лицевого счёта; дублирует <code>account_id</code> из Envelope</td></tr><tr><td><code>sent_time</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Unix-время отправки SMS, микросекунды</td></tr><tr><td><code>id</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>ID SMS-сообщения во внутренней системе</td></tr><tr><td><code>dst_number</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер получателя (номер B)</td></tr><tr><td><code>smsc</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Идентификатор SMS-центра (SMSC), через который отправлено сообщение</td></tr><tr><td><code>direction</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Направление SMS: <code>incoming</code> — входящее, <code>outgoing</code> — исходящее</td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p><strong>Пример:</strong> Payload</p>
+<pre><code class="language-json">{
+ &quot;account_id&quot;: 10001,
+  &quot;event_type&quot;: &quot;sms_event&quot;,
+  &quot;created_at&quot;: &quot;2026-07-01T18:34:48.548Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;5b133904-6192-49d2-abbc-f95be887fb70&quot;,
+  &quot;data&quot;: {
+    &quot;date&quot;: 1782920088283097,
+    &quot;client_account_id&quot;: 10001,
+    &quot;message_coding&quot;: null,
+    &quot;eventType&quot;: &quot;sms_event&quot;,
+    &quot;message&quot;: &quot;Текст входящего СМС&quot;,
+    &quot;type&quot;: &quot;p2p&quot;,
+    &quot;src_number&quot;: &quot;Example&quot;,
+    &quot;accountId&quot;: 10001,
+    &quot;sent_time&quot;: 1782920088279568,
+    &quot;id&quot;: 7979973,
+    &quot;dst_number&quot;: &quot;+79000000004&quot;,
+    &quot;smsc&quot;: &quot;yate-smsgw&quot;,
+    &quot;direction&quot;: &quot;incoming&quot;
+  }
+}
+</code></pre>
+</details>
+<h2 id="биллинг-sms"><a aria-hidden="true" tabindex="-1" href="#биллинг-sms"><span class="icon icon-link"></span></a>Биллинг SMS</h2>
+<details>
+<summary>Sms_billing_event - Списание за отправку СМС</summary>
+<p><strong>Описание:</strong> Биллинговая информация о СМС<br>
+<strong>Payload:</strong> <code>allOf</code> — общий <code>Envelope</code> + данные события.</p>
+<h2 id="envelope-1"><a aria-hidden="true" tabindex="-1" href="#envelope-1"><span class="icon icon-link"></span></a>Envelope</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события — см. <code>components/messages</code></td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; используется для дедупликации повторных доставок</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<h2 id="data-1"><a aria-hidden="true" tabindex="-1" href="#data-1"><span class="icon icon-link"></span></a><code>data</code></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>service_start_timestamp</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Unix-время начала тарифицируемой услуги</td></tr><tr><td><code>setup_time</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Отметка времени</td></tr><tr><td><code>account_tariff_light_id</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>ID тарифного плана лицевого счёта</td></tr><tr><td><code>number_service_id</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>ID услуги номера, к которой относится списание</td></tr><tr><td><code>term_gt</code></td><td><code>null</code></td><td style="text-align:center">✓</td><td>Global Title принимающей стороны SMS; служебное поле SMPP</td></tr><tr><td><code>package_pricelist_id</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>ID прайс-листа пакета услуг</td></tr><tr><td><code>package_sms_consumed</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Число SMS, списанных из пакета</td></tr><tr><td><code>location_id</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>ID локации/региона тарификации</td></tr><tr><td><code>src_number</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер отправителя (номер A)</td></tr><tr><td><code>rate</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Тариф за единицу услуги</td></tr><tr><td><code>term_cdr_id</code></td><td><code>null</code></td><td style="text-align:center">✓</td><td>ID CDR-записи принимающей стороны; служебное поле</td></tr><tr><td><code>trunk_service_id</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>ID транкового сервиса, через который отправлено SMS</td></tr><tr><td><code>id</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>ID записи биллинга SMS</td></tr><tr><td><code>stats_package_sms_id</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>ID записи статистики по пакету SMS</td></tr><tr><td><code>id_since_start</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Порядковый номер записи с начала биллингового периода</td></tr><tr><td><code>pricelist_location_id</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>ID локации в прайс-листе</td></tr><tr><td><code>cost</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Стоимость SMS</td></tr><tr><td><code>smpp_cdr_id</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>ID CDR-записи по SMPP-каналу отправки</td></tr><tr><td><code>count</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Количество SMS</td></tr><tr><td><code>eventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>accountId</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер лицевого счёта; дублирует <code>account_id</code> из Envelope</td></tr><tr><td><code>account_id</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер лицевого счёта</td></tr><tr><td><code>dst_imsi</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>IMSI принимающего абонента</td></tr><tr><td><code>smpp_gt</code></td><td><code>null</code></td><td style="text-align:center">✓</td><td>Global Title в SMPP-канале; служебное поле</td></tr><tr><td><code>orig_cdr_id</code></td><td><code>null</code></td><td style="text-align:center">✓</td><td>ID CDR-записи исходящей стороны; служебное поле</td></tr><tr><td><code>dst_number</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер получателя (номер B)</td></tr><tr><td><code>src_imsi</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>IMSI отправляющего абонента</td></tr><tr><td><code>orig_gt</code></td><td><code>null</code></td><td style="text-align:center">✓</td><td>Global Title исходящей стороны; служебное поле</td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p><strong>Пример:</strong> Payload</p>
+<pre><code class="language-json">{
+ &quot;account_id&quot;: 10001,
+  &quot;event_type&quot;: &quot;sms_billing_event&quot;,
+  &quot;created_at&quot;: &quot;2026-07-01T23:40:24.352Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;5b133904-6192-49d2-abbc-f95be887fb70&quot;,
+  &quot;data&quot;: {
+    &quot;service_start_timestamp&quot;: 1776168259,
+    &quot;setup_time&quot;: 1782938422000000,
+    &quot;account_tariff_light_id&quot;: 103523009,
+    &quot;number_service_id&quot;: 2971790,
+    &quot;term_gt&quot;: null,
+    &quot;package_pricelist_id&quot;: 2667,
+    &quot;package_sms_consumed&quot;: 0,
+    &quot;location_id&quot;: 1,
+    &quot;src_number&quot;: &quot;79000000033&quot;,
+    &quot;rate&quot;: 0,
+    &quot;term_cdr_id&quot;: null,
+    &quot;trunk_service_id&quot;: 0,
+    &quot;id&quot;: 15873213,
+    &quot;stats_package_sms_id&quot;: 0,
+    &quot;id_since_start&quot;: 831164,
+    &quot;pricelist_location_id&quot;: 39362,
+    &quot;cost&quot;: 0,
+    &quot;smpp_cdr_id&quot;: 77432665,
+    &quot;count&quot;: 1,
+    &quot;eventType&quot;: &quot;sms_billing_event&quot;,
+    &quot;accountId&quot;: 10001,
+    &quot;account_id&quot;: 10001,
+    &quot;dst_imsi&quot;: &quot;&quot;,
+    &quot;smpp_gt&quot;: null,
+    &quot;orig_cdr_id&quot;: null,
+    &quot;dst_number&quot;: &quot;79000000034&quot;,
+    &quot;src_imsi&quot;: &quot;&quot;,
+    &quot;orig_gt&quot;: null
+  }
+}
+</code></pre>
+</details>

@@ -1,0 +1,228 @@
+<h1 id="автозвонки-20"><a aria-hidden="true" tabindex="-1" href="#автозвонки-20"><span class="icon icon-link"></span></a>Автозвонки 2.0</h1>
+<p>События (вебхуки и триггеры), связанные с работой Автозвонков 2.0.</p>
+<p>Единый <code>Envelope</code> используется для всех событий: один <code>channel</code> соответствует одному <code>event_type</code>.</p>
+<h2 id="содержание"><a aria-hidden="true" tabindex="-1" href="#содержание"><span class="icon icon-link"></span></a>Содержание</h2>
+<ul>
+<li><a href="#%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5-%D1%81%D1%82%D0%B0%D1%82%D1%83%D1%81%D0%B0-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D1%8F">Изменение статуса задания</a></li>
+</ul>
+<p>Также см.:<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-virtualnaya-ats-zvonki-vats-pereadresatsiya-i-vnutrennie-nomera--c8d6608a-4125-4ace-9669-8d8351c72a65/"><strong>«Каталог событий MCN Telecom — Виртуальная АТС (Звонки ВАТС, Переадресация и внутренние номера)»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-virtualnaya-ats-ocheredi-drugie-sobytiya-vats--db2b512e-8220-4265-9d11-5201932885c8/"><strong>«Каталог событий MCN Telecom — Виртуальная АТС (Очереди, Другие события ВАТС)»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-rabota-s-rechyu--6cb215de-0ad2-4c83-89c8-5b20db742aa1/"><strong>«Каталог событий MCN Telecom — Работа с речью»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-avtorizatsiya-po-zvonku--b186d668-e72b-4353-9db8-586322a9a608/"><strong>«Каталог событий MCN Telecom — Авторизация по звонку»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-adresnaya-kniga--693360fe-3b95-44a7-859e-534bee22318c/"><strong>«Каталог событий MCN Telecom — Адресная книга»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-golosovoy-robot--dd780c4b-0201-4c45-afcd-3328fbe45349/"><strong>«Каталог событий MCN Telecom — Голосовой робот»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-ii-agent--852b3373-bf9f-4be9-813a-f14a1493b0d8/"><strong>«Каталог событий MCN Telecom — ИИ-агент»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-kontakt-tsentr--5d8c9cc8-84fc-4ca5-a0b7-9cc8ab145d18/"><strong>«Каталог событий MCN Telecom — Контакт-центр»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-kolltreking--c0d70ea5-e967-437f-883e-6d740d9e7b85/"><strong>«Каталог событий MCN Telecom — Коллтрекинг»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-rabota-s-rechyu--6cb215de-0ad2-4c83-89c8-5b20db742aa1/"><strong>«Каталог событий MCN Telecom — Работа с речью»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-telefoniya--848aaaa0-012a-4018-9a30-885ed57ed74f/"><strong>«Каталог событий MCN Telecom — Телефония»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-chat-boty--a181591b-991a-46f2-8421-0692b1327c2b/"><strong>«Каталог событий MCN Telecom — Чат-боты»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-sms--01836f81-a9bc-4fe2-afeb-deda6d30e937/"><strong>«Каталог событий MCN Telecom — SMS»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-sostoyanie-schyota--f9f0fb4b-e84e-4902-ab67-0ac1190f593a"><strong>«Каталог событий MCN Telecom — Состояние счёта»</strong></a></p>
+<h2 id="общий-формат-события"><a aria-hidden="true" tabindex="-1" href="#общий-формат-события"><span class="icon icon-link"></span></a>Общий формат события</h2>
+<p>Все события используют общую обёртку <code>Envelope</code>:</p>
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; одинаков при повторных доставках и используется для дедупликации</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p>Для события приведены описание полей <code>data</code> и пример <code>Payload</code>.</p>
+<h2 id="изменение-статуса-задания"><a aria-hidden="true" tabindex="-1" href="#изменение-статуса-задания"><span class="icon icon-link"></span></a>Изменение статуса задания</h2>
+<details>
+<summary>Task.status-changed - Автозвонки 2.0: Изменение статуса задания</summary>
+<p><strong>Описание:</strong> Событие изменения статуса задания автозвонка.<br>
+<strong>Payload:</strong> <code>allOf</code> — общий <code>Envelope</code> + данные события.</p>
+<h2 id="envelope"><a aria-hidden="true" tabindex="-1" href="#envelope"><span class="icon icon-link"></span></a>Envelope</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события — см. <code>components/messages</code></td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; используется для дедупликации повторных доставок</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<h2 id="data"><a aria-hidden="true" tabindex="-1" href="#data"><span class="icon icon-link"></span></a><code>data</code></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>accountId</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер лицевого счёта; дублирует <code>account_id</code> из Envelope</td></tr><tr><td><code>eventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дублирует <code>event_type</code> события</td></tr><tr><td><code>id</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уникальный технический идентификатор события (UUID)</td></tr><tr><td><code>event</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дублирует <code>event_type</code>; служебное поле Asterisk UserEvent</td></tr><tr><td><code>timestamp</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Момент события (ISO 8601)</td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p><strong>Пример:</strong> Payload</p>
+<pre><code class="language-json">{
+  &quot;account_id&quot;: 10001,
+  &quot;event_type&quot;: &quot;task.status-changed&quot;,
+  &quot;created_at&quot;: &quot;2026-06-19T11:15:09.859Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;5b133904-6192-49d2-abbc-f95be887fb70&quot;,
+  &quot;data&quot;: {
+    &quot;accountId&quot;: 10001,
+    &quot;payload&quot;: {
+      &quot;task&quot;: {
+        &quot;schedule&quot;: {
+          &quot;allowHolidays&quot;: true,
+          &quot;name&quot;: &quot;Пример Компания&quot;,
+          &quot;id&quot;: &quot;schedule:1rl2idte&quot;,
+          &quot;serviceId&quot;: 2326719,
+          &quot;value&quot;: [
+            {
+              &quot;dayOfWeek&quot;: {
+                &quot;start&quot;: 1,
+                &quot;end&quot;: 7
+              },
+              &quot;hour&quot;: {
+                &quot;start&quot;: 0,
+                &quot;end&quot;: 23
+              },
+              &quot;minute&quot;: {
+                &quot;start&quot;: 0,
+                &quot;end&quot;: 59
+              }
+            }
+          ]
+        },
+        &quot;connector&quot;: {
+          &quot;retrySettings&quot;: {
+            &quot;busy&quot;: {
+              &quot;delay&quot;: {
+                &quot;unit&quot;: &quot;s&quot;,
+                &quot;count&quot;: 30
+              },
+              &quot;attempts&quot;: 3
+            },
+            &quot;noAnswer&quot;: {
+              &quot;delay&quot;: {
+                &quot;unit&quot;: &quot;s&quot;,
+                &quot;count&quot;: 30
+              },
+              &quot;attempts&quot;: 3
+            },
+            &quot;technicalFailure&quot;: {
+              &quot;delay&quot;: {
+                &quot;unit&quot;: &quot;s&quot;,
+                &quot;count&quot;: 30
+              },
+              &quot;attempts&quot;: 3
+            }
+          },
+          &quot;callSource&quot;: {
+            &quot;callMode&quot;: &quot;client_first&quot;,
+            &quot;useSubscriberNumberTimezone&quot;: true,
+            &quot;type&quot;: &quot;vpbx&quot;,
+            &quot;vpbxId&quot;: &quot;280&quot;
+          },
+          &quot;id&quot;: &quot;connector:p4nm30gt&quot;,
+          &quot;scenarioId&quot;: &quot;1201&quot;,
+          &quot;scenarioName&quot;: &quot;Example Scenario (vpbx)&quot;,
+          &quot;network&quot;: &quot;vpbx&quot;
+        },
+        &quot;service&quot;: {
+          &quot;accountId&quot;: 10001,
+          &quot;deactivationDate&quot;: null,
+          &quot;id&quot;: 2326719,
+          &quot;requireModeration&quot;: false,
+          &quot;activationDate&quot;: &quot;2022-08-02T21:00:00.000Z&quot;,
+          &quot;status&quot;: &quot;activated&quot;
+        },
+        &quot;name&quot;: &quot;sfsd copy (-vhv) copy (hqos)&quot;,
+        &quot;timezoneName&quot;: &quot;Europe/Moscow&quot;,
+        &quot;contactGroupId&quot;: 142,
+        &quot;interval&quot;: {
+          &quot;from&quot;: &quot;2026-02-15T21:00:00.000Z&quot;,
+          &quot;to&quot;: &quot;2036-02-16T20:59:59.999Z&quot;
+        },
+        &quot;id&quot;: &quot;task:4t137kgp&quot;,
+        &quot;orchestratorVersion&quot;: &quot;1.0.49&quot;,
+        &quot;serviceId&quot;: 2326719,
+        &quot;speed&quot;: {
+          &quot;count&quot;: 60,
+          &quot;timeUnit&quot;: {
+            &quot;unit&quot;: &quot;h&quot;,
+            &quot;quantity&quot;: 1
+          }
+        },
+        &quot;status&quot;: &quot;on_moderation&quot;
+      },
+      &quot;newStatus&quot;: &quot;ready_to_start&quot;,
+      &quot;oldStatus&quot;: &quot;on_moderation&quot;
+    },
+    &quot;eventType&quot;: &quot;task.status-changed&quot;,
+    &quot;id&quot;: &quot;a28476ba-01c0-48ab-8009-98855fdd2320&quot;,
+    &quot;event&quot;: &quot;task.status-changed&quot;,
+    &quot;timestamp&quot;: &quot;2026-06-19T08:15:09.214Z&quot;
+  }
+}
+</code></pre>
+</details>

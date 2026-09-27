@@ -5,6 +5,8 @@ import ru.mcn.knowledgebase.domain.model.Category
 
 interface KnowledgeRepository {
 
+    suspend fun refresh()
+
     suspend fun getCategories(): List<Category>
 
     suspend fun getArticles(

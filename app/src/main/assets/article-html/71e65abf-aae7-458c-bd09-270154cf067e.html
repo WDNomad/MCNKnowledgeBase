@@ -1,0 +1,112 @@
+<table><thead><tr><th style="text-align:left">⚠️Внимание!</th><th style="text-align:left">Настройку может проводить пользователь только с правами «Владелец» или «Администратор».</th></tr></thead></table>
+<h2 id="данные-из-личного-кабинета-mcn-telecom"><a aria-hidden="true" tabindex="-1" href="#данные-из-личного-кабинета-mcn-telecom"><span class="icon icon-link"></span></a>Данные из личного кабинета <strong>MCN Telecom</strong>:</h2>
+<ol>
+<li>
+<p><strong>Номер ЛС</strong> — на любой странице личного кабинета в верхней панели экрана.</p>
+<p><img src="https://kb.mcn.ru/api/public/v1/s3-file/3bd90a88-f0c5-466f-a68a-ea5d90e9e365" alt="365-1.jpg"></p>
+</li>
+<li>
+<p><strong>Номер виртуальной АТС</strong> — раздел <strong>«ВАТС 2.0»</strong> → вкладка <strong>«Телефонная система»</strong> → меню слева <strong>«Номера»</strong> → в колонке <strong>«Услуга»</strong>.</p>
+<p><img src="https://kb.mcn.ru/api/public/v1/s3-file/166269a1-3373-4015-bd82-3d18dff44981" alt="365-2.jpg"></p>
+</li>
+<li>
+<p><strong>Токен</strong> — раздел <strong>«Интеграции»</strong> → вкладка <strong>«Токены»</strong> → вкладка <a href="https://integration.mcn.ru/integration/tokens"><strong>«Токены API»</strong></a>. Подробнее см. <a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/tokeny/kak-poluchit-token--ff4d1379-e758-44ec-9001-3303558df416/"><strong>«Как получить токен»</strong></a>.</p>
+<p><img src="https://kb.mcn.ru/api/public/v1/s3-file/d6e74307-e356-4b1f-8925-58a789df8f44" alt="365-3.jpg"></p>
+</li>
+<li>
+<p><strong>Внутренние номера</strong> и <strong>ID пользователя</strong> (для передачи вашему менеджеру в Staff365)— раздел <strong>«ВАТС 2.0»</strong> → вкладка <strong>«ВАТС»</strong> → меню слева <strong>«Номерной план»</strong> → <a href="https://telephony.mcn.ru/telephony/app/vpbx/int_numbers"><strong>«Номера абонентов»</strong></a> → в колонках <strong>«Номер абонента»</strong> и <strong>«ID пользователя»</strong>.</p>
+<p><img src="https://kb.mcn.ru/api/public/v1/s3-file/5fb3a9e3-4822-44a5-b675-a1d933bb566d" alt="365-4.jpg"></p>
+</li>
+</ol>
+<h2 id="в-личном-кабинете-crm-staff365"><a aria-hidden="true" tabindex="-1" href="#в-личном-кабинете-crm-staff365"><span class="icon icon-link"></span></a>В личном кабинете CRM Staff365:</h2>
+<table><thead><tr><th style="text-align:left">⚠️Внимание!</th><th style="text-align:left">Настройку может проводить пользователь только с правами «Администратор».</th></tr></thead></table>
+<ol>
+<li>
+<p>В главном меню через три черточки в левом верхнем углу → откройте <strong>«Настройки»</strong> → <strong>«Настройки CRM»</strong>.</p>
+<p><img src="https://kb.mcn.ru/api/public/v1/s3-file/ac09fad3-acb4-4dad-813c-4ab3e38df5ff" alt="365-5.png"></p>
+</li>
+<li>
+<p>В открывшемся меню слева разверните раздел <strong>«Интеграция»</strong> и нажмите на пункт <strong>«Интеграция с облачными АТС»</strong>, а затем в правом верхнем углу нажмите <strong>«Изменить».</strong></p>
+<p><img src="https://kb.mcn.ru/api/public/v1/s3-file/c15b7aab-4624-432e-b658-07d83a0e4a51" alt="365-6.png"></p>
+</li>
+<li>
+<p>В появившемся окне последовательно:</p>
+<ol>
+<li>Отметьте галочкой <strong>«Использовать данного провайдера ВАТС при осуществелении click2call»</strong>.</li>
+<li>В списка <strong>«ВАТС по-умолчанию»</strong> выбираем значение <strong>«Mcn»</strong>.</li>
+</ol>
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">⚠️Внимание!</th><th style="text-align:left">Поле «MCN crm token» оставьте пустым!!!</th></tr></thead></table>
+<ol>
+<li>
+<p>В поле <strong>«MCN API url»</strong> впишите фиксировано <strong><a href="https://integrationv2.mcn.ru/api/protected/api/">https://integrationv2.mcn.ru/api/protected/api/</a></strong></p>
+</li>
+<li>
+<p>В поле <strong>«MCN api token»</strong> — вставьте токен из <a href="https://integration.mcn.ru/integration/tokens">личного кабинета <strong>MCN Telecom</strong></a>.</p>
+</li>
+<li>
+<p>В поле <strong>«MCN accound id»</strong> — впишите номер лицевого счета <strong>MCN Telecom</strong>.</p>
+</li>
+<li>
+<p>В поле <strong>«MCN PBX id»</strong> — впишите <a href="https://telephony.mcn.ru/telephony/app/numbers/phone_numbers">номер виртуальной АТС <strong>MCN Telecom</strong></a>.</p>
+</li>
+<li>
+<p>Нажите <strong>«Сохранить».</strong></p>
+</li>
+<li>
+<p>Нажите <strong>«Зарегистрировать уведомления от провайдера ВАТС».</strong></p>
+<p><img src="https://kb.mcn.ru/api/public/v1/s3-file/54b10b0c-c1b9-499b-883c-f67882976b7e" alt="365-7.png"></p>
+</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li>
+<p>После обновления страницы в поле <strong>«MCN crm token»</strong> должно появиться значение токена.</p>
+</li>
+<li>
+<p>Далее, в личном кабинете MCN зайти на вкладку <strong>«Интеграции» → «Веб-хуки»</strong> и проверить, создались ли следующие вебхуки:</p>
+<ul>
+<li>
+<p>inbound start — ВАТС: Начало входящего звонка</p>
+</li>
+<li>
+<p>inbound answer queue — Ответ на звонок через очередь</p>
+</li>
+<li>
+<p>inbound answer — Ответ на звонок</p>
+</li>
+<li>
+<p>inbound end — ВАТС: Завершение входящего звонка</p>
+</li>
+<li>
+<p>inbound connected direct — ВАТС: Начало звонка на внутренний номер</p>
+</li>
+<li>
+<p>outbound start — ВАТС: Начало исходящего звонка</p>
+</li>
+<li>
+<p>outbound answer — ВАТС: Исходящий звонок отвечен</p>
+</li>
+<li>
+<p>outbound end — ВАТС: Завершение исходящего звонка</p>
+</li>
+<li>
+<p>inbound connected queue — Начало звонка на абонента в очереди</p>
+</li>
+<li>
+<p>record ready — Готовность файла записи разговора</p>
+<p><img src="https://kb.mcn.ru/api/public/v1/s3-file/70a3f035-6679-4e61-9bec-aface0a9e53f" alt="365-8.jpg"></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Если веб-хуки создались и в поле <strong>«MCN crm token»</strong> появилось значение токена – значит интеграция прошла успешно.</p>
+</li>
+</ul>

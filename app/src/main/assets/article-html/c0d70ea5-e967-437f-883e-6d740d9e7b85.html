@@ -1,0 +1,279 @@
+<h1 id="коллтрекинг"><a aria-hidden="true" tabindex="-1" href="#коллтрекинг"><span class="icon icon-link"></span></a>Коллтрекинг</h1>
+<p>События (вебхуки и триггеры), связанные с работой Коллтрекинга.</p>
+<p>Единый <code>Envelope</code> используется для всех событий: один <code>channel</code> соответствует одному <code>event_type</code>.</p>
+<h2 id="содержание"><a aria-hidden="true" tabindex="-1" href="#содержание"><span class="icon icon-link"></span></a>Содержание</h2>
+<ul>
+<li><a href="#%D0%B7%D0%B2%D0%BE%D0%BD%D0%BE%D0%BA-%D0%B8%D0%B7-%D0%BA%D0%BE%D0%BB%D0%BB%D1%82%D1%80%D0%B5%D0%BA%D0%B8%D0%BD%D0%B3%D0%B0">Звонок из Коллтрекинга</a></li>
+</ul>
+<p>Также см.:<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-virtualnaya-ats-zvonki-vats-pereadresatsiya-i-vnutrennie-nomera--c8d6608a-4125-4ace-9669-8d8351c72a65/"><strong>«Каталог событий MCN Telecom — Виртуальная АТС (Звонки ВАТС, Переадресация и внутренние номера)»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-virtualnaya-ats-ocheredi-drugie-sobytiya-vats--db2b512e-8220-4265-9d11-5201932885c8/"><strong>«Каталог событий MCN Telecom — Виртуальная АТС (Очереди, Другие события ВАТС)»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-rabota-s-rechyu--6cb215de-0ad2-4c83-89c8-5b20db742aa1/"><strong>«Каталог событий MCN Telecom — Работа с речью»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-avtorizatsiya-po-zvonku--b186d668-e72b-4353-9db8-586322a9a608/"><strong>«Каталог событий MCN Telecom — Авторизация по звонку»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-avtozvonki-2-0--f05488ad-7913-4edb-9d21-b69347ec3c5d/"><strong>«Каталог событий MCN Telecom — Автозвонки 2.0»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-adresnaya-kniga--693360fe-3b95-44a7-859e-534bee22318c/"><strong>«Каталог событий MCN Telecom — Адресная книга»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-golosovoy-robot--dd780c4b-0201-4c45-afcd-3328fbe45349/"><strong>«Каталог событий MCN Telecom — Голосовой робот»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-ii-agent--852b3373-bf9f-4be9-813a-f14a1493b0d8/"><strong>«Каталог событий MCN Telecom — ИИ-агент»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-kontakt-tsentr--5d8c9cc8-84fc-4ca5-a0b7-9cc8ab145d18/"><strong>«Каталог событий MCN Telecom — Контакт-центр»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-rabota-s-rechyu--6cb215de-0ad2-4c83-89c8-5b20db742aa1/"><strong>«Каталог событий MCN Telecom — Работа с речью»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-telefoniya--848aaaa0-012a-4018-9a30-885ed57ed74f/"><strong>«Каталог событий MCN Telecom — Телефония»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-chat-boty--a181591b-991a-46f2-8421-0692b1327c2b/"><strong>«Каталог событий MCN Telecom — Чат-боты»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-sms--01836f81-a9bc-4fe2-afeb-deda6d30e937/"><strong>«Каталог событий MCN Telecom — SMS»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-sostoyanie-schyota--f9f0fb4b-e84e-4902-ab67-0ac1190f593a"><strong>«Каталог событий MCN Telecom — Состояние счёта»</strong></a></p>
+<h2 id="общий-формат-события"><a aria-hidden="true" tabindex="-1" href="#общий-формат-события"><span class="icon icon-link"></span></a>Общий формат события</h2>
+<p>Все события используют общую обёртку <code>Envelope</code>:</p>
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; одинаков при повторных доставках и используется для дедупликации</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p>Для события приведены описание полей <code>data</code> и пример <code>Payload</code>.</p>
+<h2 id="звонок-из-коллтрекинга"><a aria-hidden="true" tabindex="-1" href="#звонок-из-коллтрекинга"><span class="icon icon-link"></span></a>Звонок из Коллтрекинга</h2>
+<details>
+<summary>Calltracking_call - Звонок из коллтрекинга</summary>
+<p><strong>Описание:</strong> Звонок из коллтрекинга<br>
+<strong>Payload:</strong> <code>allOf</code> — общий <code>Envelope</code> + данные события.</p>
+<h2 id="envelope"><a aria-hidden="true" tabindex="-1" href="#envelope"><span class="icon icon-link"></span></a>Envelope</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события — см. <code>components/messages</code></td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; используется для дедупликации повторных доставок</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<h2 id="data"><a aria-hidden="true" tabindex="-1" href="#data"><span class="icon icon-link"></span></a><code>data</code></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>google_id</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID клика Google Ads, связанный со звонком</td></tr><tr><td><code>utm_medium</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>UTM-метка <code>medium</code></td></tr><tr><td><code>ya_tracker_id</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID счётчика Яндекс Метрики</td></tr><tr><td><code>duration</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Длительность разговора</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дублирует <code>event_type</code> события внутри <code>data</code></td></tr><tr><td><code>connect_time</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Время соединения</td></tr><tr><td><code>repeat</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Признак повторного звонка</td></tr><tr><td><code>utm_content</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>UTM-метка <code>content</code></td></tr><tr><td><code>google_tracker_id</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID трекера Google Ads, связанный со звонком</td></tr><tr><td><code>channel_name</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Название рекламного канала коллтрекинга</td></tr><tr><td><code>linkedId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID связанного звонка</td></tr><tr><td><code>utm_campaign</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>UTM-метка <code>campaign</code></td></tr><tr><td><code>mcn_callid</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Внутренний ID звонка в системе коллтрекинга</td></tr><tr><td><code>eventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>utm_term</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>UTM-метка <code>term</code></td></tr><tr><td><code>last_location</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Последняя страница/раздел сайта перед звонком</td></tr><tr><td><code>accountId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер лицевого счёта; дублирует <code>account_id</code> из Envelope</td></tr><tr><td><code>site</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Страница трекера</td></tr><tr><td><code>account_id</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер ЛС</td></tr><tr><td><code>phone</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер телефона</td></tr><tr><td><code>ya_client_id</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID посетителя Яндекс Метрики</td></tr><tr><td><code>tracker_name</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Название трекера коллтрекинга</td></tr><tr><td><code>roistat_visit_id</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID визита Roistat</td></tr><tr><td><code>dst_number</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер, на который поступил звонок (номер коллтрекинга)</td></tr><tr><td><code>utm_source</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>UTM-метка <code>source</code></td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p><strong>Пример:</strong> Payload</p>
+<pre><code class="language-json">{
+ &quot;account_id&quot;: 10001,
+  &quot;event_type&quot;: &quot;calltracking_call&quot;,
+  &quot;created_at&quot;: &quot;2026-07-01T13:34:25.812Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;5b133904-6192-49d2-abbc-f95be887fb70&quot;,
+  &quot;data&quot;: {
+    &quot;google_id&quot;: &quot;&quot;,
+    &quot;utm_medium&quot;: &quot;&quot;,
+    &quot;ya_tracker_id&quot;: &quot;&quot;,
+    &quot;duration&quot;: 60,
+    &quot;event_type&quot;: &quot;calltracking_call&quot;,
+    &quot;connect_time&quot;: &quot;2026-07-01T10:34:06.000Z&quot;,
+    &quot;repeat&quot;: 0,
+    &quot;utm_content&quot;: &quot;&quot;,
+    &quot;google_tracker_id&quot;: &quot;&quot;,
+    &quot;channel_name&quot;: &quot;Тест оффлайн&quot;,
+    &quot;linkedId&quot;: &quot;&quot;,
+    &quot;utm_campaign&quot;: &quot;&quot;,
+    &quot;mcn_callid&quot;: &quot;006a44ed-0700-800b-7d3b-d7d00a67aa0b&quot;,
+    &quot;eventType&quot;: &quot;calltracking_call&quot;,
+    &quot;utm_term&quot;: &quot;&quot;,
+    &quot;last_location&quot;: &quot;&quot;,
+    &quot;accountId&quot;: &quot;10001&quot;,
+    &quot;site&quot;: &quot;&quot;,
+    &quot;account_id&quot;: &quot;10001&quot;,
+    &quot;phone&quot;: &quot;79000000003&quot;,
+    &quot;ya_client_id&quot;: &quot;&quot;,
+    &quot;tracker_name&quot;: &quot;Тест оффлайн&quot;,
+    &quot;roistat_visit_id&quot;: &quot;&quot;,
+    &quot;dst_number&quot;: &quot;79000000004&quot;,
+    &quot;utm_source&quot;: &quot;&quot;
+  }
+}
+</code></pre>
+</details>

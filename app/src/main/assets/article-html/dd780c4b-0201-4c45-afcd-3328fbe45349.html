@@ -1,0 +1,544 @@
+<h1 id="голосовой-робот"><a aria-hidden="true" tabindex="-1" href="#голосовой-робот"><span class="icon icon-link"></span></a>Голосовой робот</h1>
+<p>События (вебхуки и триггеры), связанные с работой Голосового робота.</p>
+<p>Единый <code>Envelope</code> используется для всех событий: один <code>channel</code> соответствует одному <code>event_type</code>.</p>
+<h2 id="содержание"><a aria-hidden="true" tabindex="-1" href="#содержание"><span class="icon icon-link"></span></a>Содержание</h2>
+<ul>
+<li><a href="#%D0%B7%D0%B2%D0%BE%D0%BD%D0%BE%D0%BA-%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D1%83">Звонок объекту</a></li>
+<li><a href="#%D0%B7%D0%B2%D0%BE%D0%BD%D0%BE%D0%BA-%D0%BA%D0%BB%D0%B8%D0%B5%D0%BD%D1%82%D1%83">Звонок клиенту</a></li>
+</ul>
+<p>Также см.:<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-virtualnaya-ats-zvonki-vats-pereadresatsiya-i-vnutrennie-nomera--c8d6608a-4125-4ace-9669-8d8351c72a65/"><strong>«Каталог событий MCN Telecom — Виртуальная АТС (Звонки ВАТС, Переадресация и внутренние номера)»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-virtualnaya-ats-ocheredi-drugie-sobytiya-vats--db2b512e-8220-4265-9d11-5201932885c8/"><strong>«Каталог событий MCN Telecom — Виртуальная АТС (Очереди, Другие события ВАТС)»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-rabota-s-rechyu--6cb215de-0ad2-4c83-89c8-5b20db742aa1/"><strong>«Каталог событий MCN Telecom — Работа с речью»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-avtorizatsiya-po-zvonku--b186d668-e72b-4353-9db8-586322a9a608/"><strong>«Каталог событий MCN Telecom — Авторизация по звонку»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-avtozvonki-2-0--f05488ad-7913-4edb-9d21-b69347ec3c5d/"><strong>«Каталог событий MCN Telecom — Автозвонки 2.0»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-adresnaya-kniga--693360fe-3b95-44a7-859e-534bee22318c/"><strong>«Каталог событий MCN Telecom — Адресная книга»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-ii-agent--852b3373-bf9f-4be9-813a-f14a1493b0d8/"><strong>«Каталог событий MCN Telecom — ИИ-агент»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-kontakt-tsentr--5d8c9cc8-84fc-4ca5-a0b7-9cc8ab145d18/"><strong>«Каталог событий MCN Telecom — Контакт-центр»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-kolltreking--c0d70ea5-e967-437f-883e-6d740d9e7b85/"><strong>«Каталог событий MCN Telecom — Коллтрекинг»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-rabota-s-rechyu--6cb215de-0ad2-4c83-89c8-5b20db742aa1/"><strong>«Каталог событий MCN Telecom — Работа с речью»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-telefoniya--848aaaa0-012a-4018-9a30-885ed57ed74f/"><strong>«Каталог событий MCN Telecom — Телефония»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-chat-boty--a181591b-991a-46f2-8421-0692b1327c2b/"><strong>«Каталог событий MCN Telecom — Чат-боты»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-sms--01836f81-a9bc-4fe2-afeb-deda6d30e937/"><strong>«Каталог событий MCN Telecom — SMS»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-sostoyanie-schyota--f9f0fb4b-e84e-4902-ab67-0ac1190f593a"><strong>«Каталог событий MCN Telecom — Состояние счёта»</strong></a></p>
+<h2 id="общий-формат-события"><a aria-hidden="true" tabindex="-1" href="#общий-формат-события"><span class="icon icon-link"></span></a>Общий формат события</h2>
+<p>Все события используют общую обёртку <code>Envelope</code>:</p>
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; одинаков при повторных доставках и используется для дедупликации</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p>Для каждого события приведены описание полей <code>data</code> и пример <code>Payload</code>.</p>
+<h2 id="звонок-объекту"><a aria-hidden="true" tabindex="-1" href="#звонок-объекту"><span class="icon icon-link"></span></a>Звонок объекту</h2>
+<details>
+<summary>VpbxRobocallObject - Голосовой робот: звонок</summary>
+<p><strong>Событие:</strong> Событие из голосового робота<br>
+<strong>Payload:</strong> <code>allOf</code> — общий <code>Envelope</code> + данные события.</p>
+<h2 id="envelope"><a aria-hidden="true" tabindex="-1" href="#envelope"><span class="icon icon-link"></span></a>Envelope</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события — см. <code>components/messages</code></td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; используется для дедупликации повторных доставок</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<h2 id="data"><a aria-hidden="true" tabindex="-1" href="#data"><span class="icon icon-link"></span></a><code>data</code></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>originateData</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Данные инициации звонка (<code>originateData</code>)</td></tr><tr><td><code>taskContactsId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер, к которому привязано текущее задание робоколла</td></tr><tr><td><code>robocallId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Идентификатор робоколла</td></tr><tr><td><code>userEventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дублирует <code>event_type</code> — тип события AMI UserEvent</td></tr><tr><td><code>channel</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Имя канала Asterisk (SIP/PJSIP, Local и др.)</td></tr><tr><td><code>privilege</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уровень логирования/видимости события в Asterisk AMI</td></tr><tr><td><code>exten</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Extension диалплана, где сработало событие</td></tr><tr><td><code>objectType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип объекта (например <code>did</code>)</td></tr><tr><td><code>channelState</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Код состояния Asterisk-канала (см. <code>channelStateDesc</code>)</td></tr><tr><td><code>callerIdNum</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер вызывающего абонента (Caller ID number)</td></tr><tr><td><code>systemName</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID Asterisk-сервера (номер хаба)</td></tr><tr><td><code>dateReceived</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Момент получения события (локальное время сервера)</td></tr><tr><td><code>context</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Контекст события</td></tr><tr><td><code>event</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дублирует <code>event_type</code> — служебное поле Asterisk UserEvent</td></tr><tr><td><code>calledNumber</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер вызывающей стороны</td></tr><tr><td><code>objectId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Идентификатор объекта</td></tr><tr><td><code>timestamp</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Время создания события</td></tr><tr><td><code>callId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Идентификатор звонка</td></tr><tr><td><code>linkedId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID связанного звонка</td></tr><tr><td><code>callerNumber</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер звонящего абонента</td></tr><tr><td><code>dateReceivedAtUTC</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Время получения Kafka-коннектором в UTC, до микросекунд</td></tr><tr><td><code>eventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>priority</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Приоритет текущего шага диалплана Asterisk</td></tr><tr><td><code>accountId</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер ЛС</td></tr><tr><td><code>channelStateDesc</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Расшифровка <code>channelState</code> (например <code>Up</code>, <code>Ring</code>, <code>Down</code>)</td></tr><tr><td><code>callerIdName</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Имя вызывающего абонента, если передано АТС/оператором</td></tr><tr><td><code>taskId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Идентификатор задачи робоколла</td></tr><tr><td><code>uniqueId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уникальный ID <code>call-leg</code>, формат <code>{systemName}-{timestamp}.{seq}</code></td></tr><tr><td><code>vpbxId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер Виртуальной АТС</td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p><strong>Пример:</strong> Payload</p>
+<pre><code class="language-json">{
+&quot;account_id&quot;: 10001,
+  &quot;event_type&quot;: &quot;VpbxRobocallObject&quot;,
+  &quot;created_at&quot;: &quot;2026-07-01T16:50:21.801Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;5b133904-6192-49d2-abbc-f95be887fb70&quot;,
+  &quot;data&quot;: {
+    &quot;originateData&quot;: &quot;&quot;,
+    &quot;taskContactsId&quot;: &quot;26181272&quot;,
+    &quot;robocallId&quot;: &quot;9&quot;,
+    &quot;userEventType&quot;: &quot;VpbxRobocallObject&quot;,
+    &quot;channel&quot;: &quot;Local/s@autodial-client-leg-0002e24c;1&quot;,
+    &quot;privilege&quot;: &quot;user,all&quot;,
+    &quot;exten&quot;: &quot;s&quot;,
+    &quot;objectType&quot;: &quot;ivr&quot;,
+    &quot;channelState&quot;: 6,
+    &quot;callerIdNum&quot;: &quot;79000000041&quot;,
+    &quot;systemName&quot;: &quot;125&quot;,
+    &quot;dateReceived&quot;: &quot;Jul 1, 2026, 4:50:21 PM&quot;,
+    &quot;context&quot;: &quot;autodial-object-leg&quot;,
+    &quot;event&quot;: &quot;VpbxRobocallObject&quot;,
+    &quot;calledNumber&quot;: &quot;79000000041&quot;,
+    &quot;objectId&quot;: &quot;51325&quot;,
+    &quot;timestamp&quot;: 1782913821,
+    &quot;callId&quot;: &quot;125-1782913817.12136236&quot;,
+    &quot;linkedId&quot;: &quot;125-1782913817.12136235&quot;,
+    &quot;callerNumber&quot;: null,
+    &quot;dateReceivedAtUTC&quot;: &quot;2026-07-01 13:50:21.438913&quot;,
+    &quot;eventType&quot;: &quot;VpbxRobocallObject&quot;,
+    &quot;priority&quot;: 32,
+    &quot;accountId&quot;: 10001,
+    &quot;channelStateDesc&quot;: &quot;Up&quot;,
+    &quot;callerIdName&quot;: &quot;Autodialer&quot;,
+    &quot;taskId&quot;: &quot;17227&quot;,
+    &quot;uniqueId&quot;: &quot;125-1782913817.12136235&quot;,
+    &quot;vpbxId&quot;: &quot;280&quot;
+  }
+}
+</code></pre>
+</details>
+<h2 id="звонок-клиенту"><a aria-hidden="true" tabindex="-1" href="#звонок-клиенту"><span class="icon icon-link"></span></a>Звонок клиенту</h2>
+<details>
+<summary>VpbxRobocallClient - Событие из голосового робота</summary>
+<p><strong>Событие:</strong> Событие из голосового робота<br>
+<strong>Payload:</strong> <code>allOf</code> — общий <code>Envelope</code> + данные события.</p>
+<h2 id="envelope-1"><a aria-hidden="true" tabindex="-1" href="#envelope-1"><span class="icon icon-link"></span></a>Envelope</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события — см. <code>components/messages</code></td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; используется для дедупликации повторных доставок</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<h2 id="data-1"><a aria-hidden="true" tabindex="-1" href="#data-1"><span class="icon icon-link"></span></a><code>data</code></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>callId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Идентификатор звонка</td></tr><tr><td><code>originateData</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Данные инициации звонка (<code>originateData</code>)</td></tr><tr><td><code>linkedId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID связанного звонка</td></tr><tr><td><code>callerNumber</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер звонящего абонента</td></tr><tr><td><code>userEventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дублирует <code>event_type</code> — тип события AMI UserEvent</td></tr><tr><td><code>dateReceivedAtUTC</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Время получения события Kafka-коннектором в UTC, до микросекунд</td></tr><tr><td><code>didId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер контакта</td></tr><tr><td><code>channel</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Имя канала Asterisk (SIP/PJSIP, Local и др.)</td></tr><tr><td><code>privilege</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уровень логирования/видимости события в Asterisk AMI</td></tr><tr><td><code>eventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>priority</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Приоритет текущего шага диалплана Asterisk</td></tr><tr><td><code>exten</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Extension диалплана, где сработало событие (для входящих обычно <code>s</code>)</td></tr><tr><td><code>channelState</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Код состояния Asterisk-канала (см. <code>channelStateDesc</code>)</td></tr><tr><td><code>accountId</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер ЛС</td></tr><tr><td><code>systemName</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>ID Asterisk-сервера (номер хаба)</td></tr><tr><td><code>dateReceived</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Момент получения события (локальное время сервера)</td></tr><tr><td><code>context</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Контекст события</td></tr><tr><td><code>channelStateDesc</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Расшифровка <code>channelState</code> (например <code>Up</code>, <code>Ring</code>, <code>Down</code>)</td></tr><tr><td><code>event</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Дублирует <code>event_type</code> — служебное поле Asterisk UserEvent</td></tr><tr><td><code>calledNumber</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер вызывающей стороны</td></tr><tr><td><code>uniqueId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Уникальный ID <code>call-leg</code>, формат <code>{systemName}-{timestamp}.{seq}</code></td></tr><tr><td><code>vpbxId</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Номер Виртуальной АТС</td></tr><tr><td><code>timestamp</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Время создания события</td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p><strong>Пример:</strong> Payload</p>
+<pre><code class="language-json">{
+ &quot;account_id&quot;: 10001,
+  &quot;event_type&quot;: &quot;VpbxRobocallClient&quot;,
+  &quot;created_at&quot;: &quot;2026-07-01T17:30:17.949Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;5b133904-6192-49d2-abbc-f95be887fb70&quot;,
+  &quot;data&quot;: {
+    &quot;callId&quot;: &quot;125-1782916217.12150226&quot;,
+    &quot;originateData&quot;: &quot;&quot;,
+    &quot;linkedId&quot;: &quot;125-1782916217.12150225&quot;,
+    &quot;callerNumber&quot;: null,
+    &quot;userEventType&quot;: &quot;VpbxRobocallClient&quot;,
+    &quot;dateReceivedAtUTC&quot;: &quot;2026-07-01 14:30:17.736215&quot;,
+    &quot;didId&quot;: &quot;4511&quot;,
+    &quot;channel&quot;: &quot;Local/s@autodial-client-leg-0002e2ce;2&quot;,
+    &quot;privilege&quot;: &quot;user,all&quot;,
+    &quot;eventType&quot;: &quot;VpbxRobocallClient&quot;,
+    &quot;priority&quot;: 28,
+    &quot;exten&quot;: &quot;s&quot;,
+    &quot;channelState&quot;: 4,
+    &quot;accountId&quot;: 10001,
+    &quot;systemName&quot;: &quot;125&quot;,
+    &quot;dateReceived&quot;: &quot;Jul 1, 2026, 5:30:17 PM&quot;,
+    &quot;context&quot;: &quot;autodial-client-leg&quot;,
+    &quot;channelStateDesc&quot;: &quot;Ring&quot;,
+    &quot;event&quot;: &quot;VpbxRobocallClient&quot;,
+    &quot;calledNumber&quot;: &quot;79000000040&quot;,
+    &quot;uniqueId&quot;: &quot;125-1782916217.12150226&quot;,
+    &quot;vpbxId&quot;: &quot;280&quot;,
+    &quot;timestamp&quot;: 1782916217
+  }
+}
+</code></pre>
+</details>

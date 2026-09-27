@@ -43,10 +43,13 @@ fun CategoriesScreen(
     }
 
     LaunchedEffect(Unit) {
-
-        categories = viewModel.loadCategories()
-
-        articles = viewModel.loadAllArticles()
+        try {
+            categories = viewModel.loadCategories()
+            articles = viewModel.loadAllArticles()
+        } catch (e: Exception) {
+            categories = emptyList()
+            articles = emptyList()
+        }
     }
     val filteredArticles = articles.filter {
 

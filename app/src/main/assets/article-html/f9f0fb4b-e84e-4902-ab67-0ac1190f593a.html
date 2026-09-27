@@ -1,0 +1,243 @@
+<h1 id="состояние-счёта"><a aria-hidden="true" tabindex="-1" href="#состояние-счёта"><span class="icon icon-link"></span></a>Состояние счёта</h1>
+<p>События (вебхуки и триггеры), связанные с изменением состояния счёта.</p>
+<p>Единый <code>Envelope</code> используется для всех событий: один <code>channel</code> соответствует одному <code>event_type</code>.</p>
+<h2 id="содержание"><a aria-hidden="true" tabindex="-1" href="#содержание"><span class="icon icon-link"></span></a>Содержание</h2>
+<ul>
+<li><a href="#%D1%81%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D0%BD%D0%B8%D0%B5-%D1%81%D1%87%D1%91%D1%82%D0%B0">Состояние счёта</a></li>
+</ul>
+<p>Также см.:<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-virtualnaya-ats-zvonki-vats-pereadresatsiya-i-vnutrennie-nomera--c8d6608a-4125-4ace-9669-8d8351c72a65/"><strong>«Каталог событий MCN Telecom — Виртуальная АТС (Звонки ВАТС, Переадресация и внутренние номера)»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-virtualnaya-ats-ocheredi-drugie-sobytiya-vats--db2b512e-8220-4265-9d11-5201932885c8/"><strong>«Каталог событий MCN Telecom — Виртуальная АТС (Очереди, Другие события ВАТС)»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-rabota-s-rechyu--6cb215de-0ad2-4c83-89c8-5b20db742aa1/"><strong>«Каталог событий MCN Telecom — Работа с речью»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-avtorizatsiya-po-zvonku--b186d668-e72b-4353-9db8-586322a9a608/"><strong>«Каталог событий MCN Telecom — Авторизация по звонку»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-avtozvonki-2-0--f05488ad-7913-4edb-9d21-b69347ec3c5d/"><strong>«Каталог событий MCN Telecom — Автозвонки 2.0»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-adresnaya-kniga--693360fe-3b95-44a7-859e-534bee22318c/"><strong>«Каталог событий MCN Telecom — Адресная книга»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-golosovoy-robot--dd780c4b-0201-4c45-afcd-3328fbe45349/"><strong>«Каталог событий MCN Telecom — Голосовой робот»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-ii-agent--852b3373-bf9f-4be9-813a-f14a1493b0d8/"><strong>«Каталог событий MCN Telecom — ИИ-агент»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-kontakt-tsentr--5d8c9cc8-84fc-4ca5-a0b7-9cc8ab145d18/"><strong>«Каталог событий MCN Telecom — Контакт-центр»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-kolltreking--c0d70ea5-e967-437f-883e-6d740d9e7b85/"><strong>«Каталог событий MCN Telecom — Коллтрекинг»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-rabota-s-rechyu--6cb215de-0ad2-4c83-89c8-5b20db742aa1/"><strong>«Каталог событий MCN Telecom — Работа с речью»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-telefoniya--848aaaa0-012a-4018-9a30-885ed57ed74f/"><strong>«Каталог событий MCN Telecom — Телефония»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-chat-boty--a181591b-991a-46f2-8421-0692b1327c2b/"><strong>«Каталог событий MCN Telecom — Чат-боты»</strong></a>;<br>
+<a href="https://handbook.mcn.ru/ru/integratsii-mcn-telecom/dlya-razrabotchikov/katalog-sobytiy-mcn-telecom-sms--01836f81-a9bc-4fe2-afeb-deda6d30e937/"><strong>«Каталог событий MCN Telecom — SMS»</strong></a>;</p>
+<h2 id="общий-формат-события"><a aria-hidden="true" tabindex="-1" href="#общий-формат-события"><span class="icon icon-link"></span></a>Общий формат события</h2>
+<p>Все события используют общую обёртку <code>Envelope</code>:</p>
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; одинаков при повторных доставках и используется для дедупликации</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p>Для события приведены описание полей <code>data</code> и пример <code>Payload</code>.</p>
+<h2 id="состояние-счёта-1"><a aria-hidden="true" tabindex="-1" href="#состояние-счёта-1"><span class="icon icon-link"></span></a>Состояние счёта</h2>
+<details>
+<summary>Balance - Состояние счёта</summary>
+<p><strong>Событие:</strong> Блокировка ЛС и состояние счёта<br>
+<strong>Payload:</strong> <code>allOf</code> — общий <code>Envelope</code> + данные события.</p>
+<h2 id="envelope"><a aria-hidden="true" tabindex="-1" href="#envelope"><span class="icon icon-link"></span></a>Envelope</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>account_id</code></td><td><code>integer</code></td><td style="text-align:center">✓</td><td>ID аккаунта в системе</td></tr><tr><td><code>event_type</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события — см. <code>components/messages</code></td></tr><tr><td><code>created_at</code></td><td><code>string</code> (<code>date-time</code>)</td><td style="text-align:center">✓</td><td>Момент события (UTC)</td></tr><tr><td><code>idempotencyKey</code></td><td><code>string</code> (<code>uuid</code>)</td><td style="text-align:center">—</td><td>Ключ идемпотентности; используется для дедупликации повторных доставок</td></tr><tr><td><code>data</code></td><td><code>object</code></td><td style="text-align:center">✓</td><td>Данные, специфичные для <code>event_type</code></td></tr></tbody></table>
+<h2 id="data"><a aria-hidden="true" tabindex="-1" href="#data"><span class="icon icon-link"></span></a><code>data</code></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Поле</th><th>Тип</th><th style="text-align:center">Обяз.</th><th>Описание</th></tr></thead><tbody><tr><td><code>accountId</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер лицевого счёта; дублирует <code>account_id</code> из <code>Envelope</code></td></tr><tr><td><code>sum_total</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Общая сумма</td></tr><tr><td><code>is_blocked</code></td><td><code>boolean</code></td><td style="text-align:center">✓</td><td>Состояние блокировки</td></tr><tr><td><code>account_id</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Номер ЛС</td></tr><tr><td><code>balance</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Баланс лицевого счёта</td></tr><tr><td><code>balance_available</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Доступный баланс</td></tr><tr><td><code>daily_available</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Ежедневный доступный баланс</td></tr><tr><td><code>eventType</code></td><td><code>string</code></td><td style="text-align:center">✓</td><td>Тип события</td></tr><tr><td><code>credit</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Кредитный лимит лицевого счёта</td></tr><tr><td><code>balance_without_credit</code></td><td><code>number</code></td><td style="text-align:center">✓</td><td>Баланс лицевого счёта без учёта кредитного лимита</td></tr></tbody></table>
+<blockquote>
+<p><code>✓</code> — обязательное поле; <code>—</code> — необязательное.</p>
+</blockquote>
+<p><strong>Пример:</strong> Payload</p>
+<pre><code class="language-json">{
+&quot;account_id&quot;: 10001,
+  &quot;event_type&quot;: &quot;Balance&quot;,
+  &quot;created_at&quot;: &quot;2026-07-01T23:40:29.931Z&quot;,
+  &quot;idempotencyKey&quot;: &quot;5b133904-6192-49d2-abbc-f95be887fb70&quot;,
+  &quot;data&quot;: {
+    &quot;accountId&quot;: 10001,
+    &quot;sum_total&quot;: -5026.35,
+    &quot;is_blocked&quot;: false,
+    &quot;account_id&quot;: 10001,
+    &quot;balance&quot;: -9000000,
+    &quot;balance_available&quot;: 15994973.65,
+    &quot;stats&quot;: [
+      {
+        &quot;amount_day&quot;: &quot;2026-07-01 00:00:00.000&quot;,
+        &quot;account_id&quot;: 10001,
+        &quot;amount_month&quot;: &quot;2026-07-01 00:00:00.000&quot;,
+        &quot;sum&quot;: -357.66,
+        &quot;server_id&quot;: 99,
+        &quot;amount_date&quot;: &quot;2026-07-01 00:00:00.000&quot;
+      },
+      {
+        &quot;amount_day&quot;: &quot;2026-07-01 00:00:00.000&quot;,
+        &quot;account_id&quot;: 10001,
+        &quot;amount_month&quot;: &quot;2026-07-01 00:00:00.000&quot;,
+        &quot;sum&quot;: -19.2,
+        &quot;server_id&quot;: 1001,
+        &quot;amount_date&quot;: &quot;2026-07-01 00:00:00.000&quot;
+      },
+      {
+        &quot;amount_day&quot;: &quot;2026-07-01 00:00:00.000&quot;,
+        &quot;account_id&quot;: 10001,
+        &quot;amount_month&quot;: &quot;2026-07-01 00:00:00.000&quot;,
+        &quot;sum&quot;: -1362.86,
+        &quot;server_id&quot;: 9,
+        &quot;amount_date&quot;: &quot;2026-07-01 00:00:00.000&quot;
+      },
+      {
+        &quot;amount_day&quot;: &quot;2026-07-01 00:00:00.000&quot;,
+        &quot;account_id&quot;: 10001,
+        &quot;amount_month&quot;: &quot;2026-07-01 00:00:00.000&quot;,
+        &quot;sum&quot;: -1842.73,
+        &quot;server_id&quot;: 7,
+        &quot;amount_date&quot;: &quot;2026-07-01 00:00:00.000&quot;
+      },
+      {
+        &quot;amount_day&quot;: &quot;2026-07-01 00:00:00.000&quot;,
+        &quot;account_id&quot;: 10001,
+        &quot;amount_month&quot;: &quot;2026-07-01 00:00:00.000&quot;,
+        &quot;sum&quot;: -1443.9,
+        &quot;server_id&quot;: 6,
+        &quot;amount_date&quot;: &quot;2026-07-01 00:00:00.000&quot;
+      },
+      {
+        &quot;amount_day&quot;: &quot;2026-05-13 00:00:00.000&quot;,
+        &quot;account_id&quot;: 10001,
+        &quot;amount_month&quot;: &quot;2026-05-01 00:00:00.000&quot;,
+        &quot;sum&quot;: 0,
+        &quot;server_id&quot;: 1002,
+        &quot;amount_date&quot;: &quot;2026-07-01 00:00:00.000&quot;
+      }
+    ],
+    &quot;client&quot;: {
+      &quot;timezone_offset&quot;: 3,
+      &quot;anti_fraud_disabled&quot;: false,
+      &quot;voip_limit_day&quot;: 1000000,
+      &quot;voip_limit_month&quot;: 0,
+      &quot;price_include_vat&quot;: true,
+      &quot;effective_vat_rate&quot;: 20,
+      &quot;is_blocked&quot;: false,
+      &quot;account_version&quot;: 5,
+      &quot;balance&quot;: -9000000,
+      &quot;last_payed_month&quot;: &quot;&quot;,
+      &quot;organization_id&quot;: 1,
+      &quot;currency&quot;: &quot;RUB&quot;,
+      &quot;id&quot;: 10001,
+      &quot;voip_limit_mn_day&quot;: 10000,
+      &quot;credit&quot;: 25000000,
+      &quot;voip_disabled&quot;: false,
+      &quot;amount_date&quot;: &quot;2026-07-01 00:00:00.000&quot;
+    },
+    &quot;daily_available&quot;: 994973.65,
+    &quot;eventType&quot;: &quot;Balance&quot;,
+    &quot;credit&quot;: 25000000,
+    &quot;balance_without_credit&quot;: -9005026.35
+  }
+}
+</code></pre>
+</details>

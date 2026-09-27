@@ -1,0 +1,103 @@
+<p>Вместо отправки SMS-кода пользователь <strong>звонит на выданный ему номер</strong>. Сам факт звонка подтверждает, что пользователь действительно имеет доступ к указанному номеру телефона.</p>
+<h3 id="как-это-работает"><a aria-hidden="true" tabindex="-1" href="#как-это-работает"><span class="icon icon-link"></span></a>Как это работает</h3>
+<ol>
+<li>
+<p><strong>Ваш сайт отправляет API два параметра:</strong></p>
+<ul>
+<li>номер телефона пользователя;</li>
+<li>сколько времени ждать звонок (<code>sessionTtlMs</code>).</li>
+</ul>
+</li>
+<li>
+<p><strong>API возвращает номер телефона для звонка.</strong></p>
+<p>Этот номер нужно показать пользователю на сайте.</p>
+</li>
+<li>
+<p><strong>Пользователь звонит на этот номер.</strong></p>
+</li>
+<li>
+<p>Если звонок поступил в отведённое время:</p>
+<ul>
+<li>авторизация считается <strong>успешной</strong>;</li>
+<li>вам приходит веб-хук <code>Авторизационный звонок (Call Verify)</code> со статусом успеха.</li>
+</ul>
+</li>
+<li>
+<p>Если пользователь <strong>не позвонил до окончания времени сессии</strong>:</p>
+<ul>
+<li>авторизация считается <strong>неуспешной</strong>;</li>
+<li>вам приходит веб-хук со статусом неуспеха.</li>
+<li>При этом <strong>неуспешная попытка тоже тарифицируется</strong>.</li>
+</ul>
+</li>
+</ol>
+<p>Схема:</p>
+<p><strong>Ваш сайт → передаёт номер пользователя → получает номер для звонка → показывает его пользователю → пользователь звонит → ваш веб-хук получает результат авторизации.</strong></p>
+<pre><code class="language-json">curl -X&#x27;POST&#x27; \&#x27;https://paidmethods.mcn.ru/api/v2/protected/auth/call-verify&#x27; \  
+-H&#x27;accept: application/json&#x27; \  
+-H&#x27;Content-Type: application/json&#x27; \  
+-H&#x27;Sec-Fetch-Mode: cors&#x27; \  
+-d&#x27;{  &quot;userPhoneNumber&quot;: &quot;string&quot;,  &quot;sessionTtlMs&quot;: 1}&#x27;
+</code></pre>
+<p>URL метода : <strong><a href="https://paidmethods.mcn.ru/api/v2/protected/auth/call-verify">https://paidmethods.mcn.ru/api/v2/protected/auth/call-verify</a></strong></p>
+<p><strong>Запрос</strong>:</p>
+<pre><code class="language-json">{
+  &quot;userPhoneNumber&quot;: &quot;79312345678&quot;,
+  &quot;sessionTtlMs&quot;: 100
+}
+</code></pre>
+<p><strong>API отвечает:</strong></p>
+<pre><code class="language-json">{
+  &quot;sessionId&quot;: &quot;b803e6e94146_139245&quot;,
+  &quot;phoneNumber&quot;: &quot;74959876543&quot;,
+  &quot;expiresAt&quot;: &quot;2026-09-24T07:35:55.665Z&quot;
+}
+</code></pre>
+<p>То есть пользователю нужно показать:</p>
+<blockquote>
+<p><strong>Позвоните на номер +7 495 987-65-43</strong></p>
+</blockquote>
+<p>После звонка ваш сервер получит результат через настроенный веб-хук <strong>«Авторизационный звонок (Call Verify)»</strong>.</p>
+<p><strong>Важно:</strong> <code>phoneNumber</code> в ответе — это <strong>номер, на который звонит пользователь</strong>, а <code>userPhoneNumber</code> в запросе — <strong>номер самого пользователя</strong>.</p>
+<p>Пример <strong>успешного</strong> запроса.</p>
+<pre><code>{
+&quot;linkedId&quot;: &quot;119-1790236307.926540&quot;,
+&quot;accountId&quot;: 139245,
+&quot;occurredAt&quot;: &quot;2026-09-24T07:51:47.584Z&quot;,
+&quot;poolPhoneNumber&quot;: &quot;74959876543&quot;,
+&quot;idempotencyKey&quot;: &quot;3780cdc9-014b-4be0-98cb-9cd57cc4f220&quot;,
+&quot;userPhoneNumber&quot;: &quot;79312345678&quot;,
+&quot;isConfirmed&quot;: true,
+&quot;eventType&quot;: &quot;callVerify&quot;,
+&quot;sessionId&quot;: &quot;9a738796f749_139245&quot;,
+&quot;callerPhoneNumber&quot;: &quot;79312345678&quot;
+}
+</code></pre>
+<p>Где:</p>
+<ul>
+<li><code>isConfirmed: true</code> — <strong>пользователь успешно подтвердил номер</strong>;</li>
+<li><code>callerPhoneNumber</code> — номер, с которого фактически поступил звонок;</li>
+<li><code>userPhoneNumber</code> — номер, который изначально передали на проверку;</li>
+<li><code>poolPhoneNumber</code> — номер, на который должен был позвонить пользователь;</li>
+<li><code>sessionId</code> — идентификатор конкретной сессии проверки.</li>
+</ul>
+<p>Пример <strong>неуспешного</strong> запроса.</p>
+<pre><code>{
+&quot;linkedId&quot;: null,
+&quot;accountId&quot;: 139245,
+&quot;occurredAt&quot;: &quot;2026-09-24T07:35:56.102Z&quot;,
+&quot;poolPhoneNumber&quot;: &quot;74959876543&quot;,
+&quot;idempotencyKey&quot;: &quot;7d29db08-48bd-4926-91ed-c02eae6a0d57&quot;,
+&quot;userPhoneNumber&quot;: &quot;74959876543&quot;,
+&quot;isConfirmed&quot;: false,
+&quot;eventType&quot;: &quot;callVerify&quot;,
+&quot;sessionId&quot;: &quot;b803e6e94146_139245&quot;,
+&quot;callerPhoneNumber&quot;: null
+}
+</code></pre>
+<p>Где:</p>
+<ul>
+<li><code>isConfirmed: false</code> — <strong>проверка не пройдена</strong>;</li>
+<li><code>callerPhoneNumber: null</code> — звонка от пользователя не было;</li>
+<li>сессия завершилась по таймауту.</li>
+</ul>
