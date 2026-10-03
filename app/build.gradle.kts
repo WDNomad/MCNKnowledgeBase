@@ -16,14 +16,17 @@ android {
         applicationId = "ru.mcn.knowledgebase"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 3
+        versionName = "1.1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
+            // This private build keeps the installed app's certificate so offline files survive updating.
+            signingConfig = signingConfigs.getByName("debug")
+            isDebuggable = false
             optimization {
                 enable = false
             }
@@ -37,9 +40,11 @@ android {
     buildFeatures {
         compose = true
     }
+    testOptions.unitTests.isIncludeAndroidResources = true
 }
 
 dependencies {
+    implementation("androidx.work:work-runtime-ktx:2.11.0")
     implementation("org.jsoup:jsoup:1.23.2")
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
     implementation(platform(libs.androidx.compose.bom))
@@ -51,6 +56,8 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     testImplementation(libs.junit)
+    testImplementation("org.robolectric:robolectric:4.16")
+    testImplementation("androidx.navigation:navigation-testing:2.9.4")
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)

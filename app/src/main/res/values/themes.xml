@@ -3,7 +3,8 @@
 
     <style name="Theme.MCNKnowledgeBase" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">#FFFFFF</item>
-        <item name="android:navigationBarColor">#121212</item>
+        <item name="android:windowBackground">#F4F7FB</item>
+        <item name="android:statusBarColor">#F4F7FB</item>
+        <item name="android:navigationBarColor">#101B29</item>
     </style>
 </resources>
